@@ -1,0 +1,18 @@
+spring:
+  # app 이름
+  application:
+    name: demo
+  # DB연결 정보
+  datasource:
+    driver-class-name: oracle.jdbc.driver.OracleDriver
+    url: jdbc:oracle:thin:@localhost:1521/xe
+    username: c##springboot
+    password: springboot1234
+
+# 웹서버 포트
+server:
+  port: 9080
+
+
+
+
