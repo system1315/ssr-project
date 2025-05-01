@@ -40,6 +40,10 @@ dependencies {
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+	/* 롬복을 junit에서 사용하고자 할때 반드시 포함 */
+	testCompileOnly 'org.projectlombok:lombok'
+	testAnnotationProcessor 'org.projectlombok:lombok'
+	/******************************************/
 }
 
 dependencyManagement {
@@ -50,4 +54,9 @@ dependencyManagement {
 
 tasks.named('test') {
 	useJUnitPlatform()
+}
+
+bootJar{ archivesBaseName = 'demo'
+	archiveFileName = 'demo.jar'
+	archiveVersion = '1.0.0'
 }

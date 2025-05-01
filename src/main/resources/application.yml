@@ -6,13 +6,19 @@ spring:
   datasource:
     driver-class-name: oracle.jdbc.driver.OracleDriver
     url: jdbc:oracle:thin:@localhost:1521/xe
-    username: c##springboot
-    password: springboot1234
+    username: c##product
+    password: product1234
 
 # 웹서버 포트
 server:
   port: 9080
 
+
+# 로그레벨
+# trace > debug > info > warn > error > fatal
+logging:
+  level:
+    root: info
 
 
 
