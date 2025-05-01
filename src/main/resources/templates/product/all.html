@@ -20,19 +20,25 @@
           </tr>
         </thead>
         <tbody>
-          <tr>
+          <tr th:each="product:${list}">
             <td><input type="checkbox"></td>
-            <td>1</td>
-            <td>컴퓨터</td>
-            <td>2,000,000</td>
-            <td>20</td>
+            <td th:text="${product.productId}">1</td>
+            <td th:text="${product.pname}">컴퓨터</td>
+            <td th:text="${product.price}">2,000,000</td>
+            <td th:text="${product.quantity}">20</td>
           </tr>
         </tbody>
       </table>
     </form>
     <div> 
-      <button>삭제</button> 
-      <button>등록</button> 
+      <button id="btnDel">삭제</button>
+      <button id="btnAdd">등록</button>
     </div>
+    <script>
+      const $btnAdd = document.getElementById('btnAdd');  
+      $btnAdd.addEventListener('click',e=>{
+        window.location.href = '/products/add';    // GET http://localhost:9080/products/add
+      });
+    </script>
 </body>
 </html>

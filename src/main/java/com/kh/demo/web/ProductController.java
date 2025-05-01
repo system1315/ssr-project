@@ -1,18 +1,46 @@
 package com.kh.demo.web;
 
+import com.kh.demo.domain.entity.Product;
+import com.kh.demo.domain.product.svc.ProductSVC;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.List;
+
+@Slf4j
 @Controller
 @RequestMapping("/products")
+@RequiredArgsConstructor
 public class ProductController {
+
+  final private ProductSVC productSVC;
+
   //목록
   @GetMapping       // GET  http://localhost:9080/products
-  public String findAll() {
+  public String findAll(Model model) {
+    List<Product> list = productSVC.findAll();
+    model.addAttribute("list", list);
+    return "product/all";   //view
+  }
 
-    return "product/all";   //veiw
+  //상품등록화면
+  @GetMapping("/add")       // GET  http://localhost:9080/products/add
+  public String addForm(){
+    return "product/add";  //view
+  }
+
+
+  //상품등록처리
+  @PostMapping("/add")      // POST http://localhost:9080/products/add
+  public String add(){
+
+    return "redirect:/products/{id}";
   }
 
   //
