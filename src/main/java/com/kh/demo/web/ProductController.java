@@ -2,14 +2,12 @@ package com.kh.demo.web;
 
 import com.kh.demo.domain.entity.Product;
 import com.kh.demo.domain.product.svc.ProductSVC;
+import com.kh.demo.web.form.product.SaveForm;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -38,9 +36,19 @@ public class ProductController {
 
   //상품등록처리
   @PostMapping("/add")      // POST http://localhost:9080/products/add
-  public String add(){
+  public String add(
+      //case1)
+//      @RequestParam("pname") String pname,
+//      @RequestParam("price") Long price,
+//      @RequestParam("quantity") Long quantity
+      SaveForm saveForm
 
-    return "redirect:/products/{id}";
+  ){
+//      log.info("pname={},price={},quantity={}",pname,price,quantity);
+    log.info("pname={},price={},quantity={}",saveForm.getPname(),saveForm.getPrice(),saveForm.getQuantity());
+
+    return null;
+//    return "redirect:/products/{id}";
   }
 
   //
