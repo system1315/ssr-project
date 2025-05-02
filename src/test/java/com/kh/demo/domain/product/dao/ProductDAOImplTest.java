@@ -39,4 +39,16 @@ class ProductDAOImplTest {
       log.info("product={}",product);
     }
   }
+  
+  @Test
+  @DisplayName("상품등록")
+  void save(){
+    Product product = new Product();
+    product.setPname("테스트1");
+    product.setQuantity(10L);
+    product.setPrice(1000000L);
+
+    Long pid = productDAO.save(product);
+    log.info("상품번호={}", pid);
+  }
 }

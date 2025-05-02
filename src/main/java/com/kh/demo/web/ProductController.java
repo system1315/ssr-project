@@ -30,6 +30,7 @@ public class ProductController {
   //상품등록화면
   @GetMapping("/add")       // GET  http://localhost:9080/products/add
   public String addForm(){
+
     return "product/add";  //view
   }
 
@@ -38,14 +39,14 @@ public class ProductController {
   @PostMapping("/add")      // POST http://localhost:9080/products/add
   public String add(
       //case1)
-      @RequestParam("pname") String pname,
-      @RequestParam("price") Long price,
-      @RequestParam("quantity") Long quantity
-//      SaveForm saveForm
+//      @RequestParam("pname") String pname,
+//      @RequestParam("price") Long price,
+//      @RequestParam("quantity") Long quantity
+      SaveForm saveForm
 
   ){
-      log.info("pname={},price={},quantity={}",pname,price,quantity);
-//    log.info("pname={},price={},quantity={}",saveForm.getPname(),saveForm.getPrice(),saveForm.getQuantity());
+//      log.info("pname={},price={},quantity={}",pname,price,quantity);
+    log.info("pname={},price={},quantity={}",saveForm.getPname(),saveForm.getPrice(),saveForm.getQuantity());
 
     return null;
 //    return "redirect:/products/{id}";
