@@ -3,8 +3,11 @@ package com.kh.demo.domain.product.dao;
 import com.kh.demo.domain.entity.Product;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -93,6 +96,20 @@ class ProductDAOImpl implements ProductDAO{
    */
   @Override
   public Optional<Product> findById(Long id) {
-    return Optional.empty();
+    StringBuffer sql = new StringBuffer();
+    sql.append("SELECT product_id, pname, quantity, price ");
+    sql.append("  FROM product ");
+    sql.append(" WHERE product_id = :id ");
+
+    SqlParameterSource param = new MapSqlParameterSource().addValue("id",id);
+
+    Product product = null;
+    try {
+      product = template.queryForObject(sql.toString(), param, BeanPropertyRowMapper.newInstance(Product.class));
+    } catch (EmptyResultDataAccessException e) { //template.queryForObject() : 레코드를 못찾으면 예외 발생
+      return Optional.empty();
+    }
+
+    return Optional.of(product);
   }
 }

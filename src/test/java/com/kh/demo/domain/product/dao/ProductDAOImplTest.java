@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @SpringBootTest
@@ -50,5 +51,14 @@ class ProductDAOImplTest {
 
     Long pid = productDAO.save(product);
     log.info("상품번호={}", pid);
+  }
+
+  @Test
+  @DisplayName("상품조회")
+  void findById() {
+    Long productId = 41L;
+    Optional<Product> optionalProduct = productDAO.findById(productId);
+    Product findedProduct = optionalProduct.orElseThrow();// 값이 없으면 예외 발생
+    log.info("findedProduct={}", findedProduct);
   }
 }
