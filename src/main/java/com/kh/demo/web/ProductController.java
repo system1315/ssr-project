@@ -1,5 +1,6 @@
 package com.kh.demo.web;
 
+import co.elastic.clients.elasticsearch._types.analysis.NoriAnalyzer;
 import com.kh.demo.domain.entity.Product;
 import com.kh.demo.domain.product.svc.ProductSVC;
 import com.kh.demo.web.form.product.SaveForm;
@@ -47,6 +48,13 @@ public class ProductController {
   ){
 //      log.info("pname={},price={},quantity={}",pname,price,quantity);
     log.info("pname={},price={},quantity={}",saveForm.getPname(),saveForm.getPrice(),saveForm.getQuantity());
+
+    Product product = new Product();
+    product.setPname(saveForm.getPname());
+    product.setQuantity(saveForm.getQuantity());
+    product.setPrice(saveForm.getPrice());
+
+    Long pid = productSVC.save(product);
 
     return null;
 //    return "redirect:/products/{id}";

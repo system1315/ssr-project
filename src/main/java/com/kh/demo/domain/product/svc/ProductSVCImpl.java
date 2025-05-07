@@ -19,6 +19,12 @@ public class ProductSVCImpl implements ProductSVC{
 //    this.productDAO = productDAO;
 //  }
 
+
+  @Override
+  public Long save(Product product) {
+    return productDAO.save(product);
+  }
+
   @Override
   public List<Product> findAll() {
     return productDAO.findAll();
