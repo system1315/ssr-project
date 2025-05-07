@@ -44,7 +44,7 @@ class ProductDAOImplTest {
   @DisplayName("상품등록")
   void save(){
     Product product = new Product();
-    product.setPname("테스트1");
+    product.setPname("테스트2");
     product.setQuantity(10L);
     product.setPrice(1000000L);
 

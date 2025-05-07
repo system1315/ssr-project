@@ -23,7 +23,7 @@
           <tr th:each="product:${list}">
             <td><input type="checkbox"></td>
             <td th:text="${product.productId}">1</td>
-            <td th:text="${product.pname}">컴퓨터</td>
+            <td><a th:href="@{/products/{id}(id=${product.productId})}" th:text="${product.pname}">컴퓨터</a></td>
             <td th:text="${product.price}">2,000,000</td>
             <td th:text="${product.quantity}">20</td>
           </tr>

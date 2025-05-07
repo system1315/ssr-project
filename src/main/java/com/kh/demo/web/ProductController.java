@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -43,8 +44,8 @@ public class ProductController {
 //      @RequestParam("pname") String pname,
 //      @RequestParam("price") Long price,
 //      @RequestParam("quantity") Long quantity
-      SaveForm saveForm
-
+      SaveForm saveForm,
+      RedirectAttributes redirectAttributes
   ){
 //      log.info("pname={},price={},quantity={}",pname,price,quantity);
     log.info("pname={},price={},quantity={}",saveForm.getPname(),saveForm.getPrice(),saveForm.getQuantity());
@@ -55,9 +56,23 @@ public class ProductController {
     product.setPrice(saveForm.getPrice());
 
     Long pid = productSVC.save(product);
+    redirectAttributes.addAttribute("id",pid);
+    return "redirect:/products/{id}"; //302 GET http://localhost:9080/products/2
+  }
 
-    return null;
-//    return "redirect:/products/{id}";
+  //상품조회(단건)
+  @GetMapping("/{id}")      // GET http://localhost:9080/products/2?name=홍길동&age=20
+  public String findById(
+      @PathVariable("id") Long id        // 경로변수 값을 읽어올때
+//      @RequestParam("name") String name,  // 쿼리파라미터 값을 읽어올때
+//      @RequestParam("age") Long age
+      ){
+
+    log.info("id={}",id);
+//    log.info("name={}",name);
+//    log.info("age={}",age);
+
+    return "product/detailForm";   //상품상세화면
   }
 
   //
