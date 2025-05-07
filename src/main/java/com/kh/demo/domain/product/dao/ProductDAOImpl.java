@@ -12,6 +12,7 @@ import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -83,5 +84,15 @@ class ProductDAOImpl implements ProductDAO{
     List<Product> list = template.query(sql.toString(), productRowMapper());
 
     return list;
+  }
+
+  /**
+   * 상품조회
+   * @param id 상품번호
+   * @return 상품정보
+   */
+  @Override
+  public Optional<Product> findById(Long id) {
+    return Optional.empty();
   }
 }

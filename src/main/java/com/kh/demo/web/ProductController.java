@@ -72,6 +72,9 @@ public class ProductController {
 //    log.info("name={}",name);
 //    log.info("age={}",age);
 
+    productSVC.findById(id);
+
+
     return "product/detailForm";   //상품상세화면
   }
 
