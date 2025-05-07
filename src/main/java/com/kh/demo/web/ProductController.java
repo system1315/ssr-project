@@ -3,15 +3,18 @@ package com.kh.demo.web;
 import co.elastic.clients.elasticsearch._types.analysis.NoriAnalyzer;
 import com.kh.demo.domain.entity.Product;
 import com.kh.demo.domain.product.svc.ProductSVC;
+import com.kh.demo.web.form.product.DetailForm;
 import com.kh.demo.web.form.product.SaveForm;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.Banner;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Controller
@@ -63,7 +66,8 @@ public class ProductController {
   //상품조회(단건)
   @GetMapping("/{id}")      // GET http://localhost:9080/products/2?name=홍길동&age=20
   public String findById(
-      @PathVariable("id") Long id        // 경로변수 값을 읽어올때
+      @PathVariable("id") Long id,        // 경로변수 값을 읽어올때
+      Model model
 //      @RequestParam("name") String name,  // 쿼리파라미터 값을 읽어올때
 //      @RequestParam("age") Long age
       ){
@@ -72,8 +76,16 @@ public class ProductController {
 //    log.info("name={}",name);
 //    log.info("age={}",age);
 
-    productSVC.findById(id);
+    Optional<Product> optionalProduct = productSVC.findById(id);
+    Product findedProduct = optionalProduct.orElseThrow();
 
+    DetailForm detailForm = new DetailForm();
+    detailForm.setProductId(findedProduct.getProductId());
+    detailForm.setPname(findedProduct.getPname());
+    detailForm.setQuantity(findedProduct.getQuantity());
+    detailForm.setPrice(findedProduct.getPrice());
+
+    model.addAttribute("detailForm",detailForm);
 
     return "product/detailForm";   //상품상세화면
   }

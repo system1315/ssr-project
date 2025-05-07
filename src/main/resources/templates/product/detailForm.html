@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>상품상세</title>
+
+</head>
+<body>
+  <h3>상품상세</h3>
+  <form action="" method="">
+    <div><label for="">상품아이디</label><input type="text" name="productId" id="" th:value="${detailForm.productId}" readonly></div>
+    <div><label for="">상품명</label><input type="text" name="pname" id="" th:value="${detailForm.pname}" readonly></div>
+    <div><label for="">가격</label><input type="text" name="price" id="" th:value="${detailForm.price}" readonly></div>
+    <div><label for="">수량</label><input type="text" name="quantity" id="" th:value="${detailForm.quantity}" readonly></div>
+    <div>
+      <button type="button" id="btnUpdate">수정</button>
+      <button type="button" id="btnDelete">삭제</button>
+      <button type="button" id="btnFindAll">목록</button>
+    </div>
+  </form>
+  <script>
+    const $btnFindAll = document.getElementById('btnFindAll');
+    $btnFindAll.addEventListener('click',e=>{
+      location.href = '/products';    // get http://localhost:9080/products
+    },false);
+  </script>
+</body>
+</html>
