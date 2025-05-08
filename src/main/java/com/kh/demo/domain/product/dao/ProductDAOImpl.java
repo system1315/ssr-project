@@ -148,4 +148,29 @@ class ProductDAOImpl implements ProductDAO{
     int rows = template.update(sql.toString(), param); //삭제한 행의 수 반환
     return rows;
   }
+
+  /**
+   * 상품 수정
+   * @param productId 상품번호
+   * @param product 상품정보
+   * @return 상품 수정 건수
+   */
+  @Override
+  public int updateById(Long productId, Product product) {
+    StringBuffer sql = new StringBuffer();
+    sql.append("UPDATE product ");
+    sql.append("   SET pname = :pname, quantity = :quantity, price = :price ");
+    sql.append(" WHERE product_id = :productId ");
+
+    //수동매핑
+    SqlParameterSource param = new MapSqlParameterSource()
+        .addValue("pname", product.getPname())
+        .addValue("quantity", product.getQuantity())
+        .addValue("price", product.getPrice())
+        .addValue("productId", productId);
+
+    int rows = template.update(sql.toString(), param); // 수정된 행의 수 반환
+
+    return rows;
+  }
 }
