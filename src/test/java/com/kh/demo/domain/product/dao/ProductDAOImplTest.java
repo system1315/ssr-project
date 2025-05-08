@@ -3,6 +3,8 @@ package com.kh.demo.domain.product.dao;
 
 import com.kh.demo.domain.entity.Product;
 import lombok.extern.slf4j.Slf4j;
+
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,4 +63,22 @@ class ProductDAOImplTest {
     Product findedProduct = optionalProduct.orElseThrow();// 값이 없으면 예외 발생
     log.info("findedProduct={}", findedProduct);
   }
+
+  @Test
+  @DisplayName("상품삭제(단건)")
+  void deleteById(){
+    Long id = 4L;
+    int rows = productDAO.deleteById(id);
+    log.info("rows={}",rows);
+    Assertions.assertThat(rows).isEqualTo(1);
+  }
+
+  @Test
+  @DisplayName("상품삭제(여러건)")
+  void deleteByIds() {
+    List<Long> ids = List.of(2L,3L);
+    int rows = productDAO.deleteByIds(ids);
+    Assertions.assertThat(rows).isEqualTo(2);
+  }
+
 }

@@ -90,6 +90,19 @@ public class ProductController {
     return "product/detailForm";   //상품상세화면
   }
 
+  //상품삭제(단건)
+  //  @GetMapping("/del?id=상품번호")   // GET http://localhost:9080/products/del?pid=상품번호
+  @GetMapping("/{id}/del")   // GET http://localhost:9080/products/상품아이디/del
+  public String deleteById(@PathVariable("id") Long productId) {
+
+    int rows = productSVC.deleteById(productId);
+
+    return "redirect:/products";      // 302 get redirectUrl: http://localhost:9080/products
+  }
+
+
+  //상품삭제(여러건)
+
   //
   @ResponseBody
   @GetMapping("/test1")   // GET http://localhost:9080/products/test1

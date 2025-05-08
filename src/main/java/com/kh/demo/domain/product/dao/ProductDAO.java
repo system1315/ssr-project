@@ -14,4 +14,11 @@ public interface ProductDAO {
 
   //상품조회
   Optional<Product> findById(Long id);
+  
+  //상품삭제(단건)
+  int deleteById(Long id);
+
+  //상품삭제(여러건)
+  int deleteByIds(List<Long> ids);
+
 }

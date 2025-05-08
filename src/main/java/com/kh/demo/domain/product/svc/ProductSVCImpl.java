@@ -38,4 +38,16 @@ public class ProductSVCImpl implements ProductSVC{
   public Optional<Product> findById(Long id) {
     return productDAO.findById(id);
   }
+
+  //상품삭제(단건)
+  @Override
+  public int deleteById(Long id) {
+    return productDAO.deleteById(id);
+  }
+
+  //상품삭제(여러건)
+  @Override
+  public int deleteByIds(List<Long> ids) {
+    return productDAO.deleteByIds(ids);
+  }
 }

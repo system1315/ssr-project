@@ -15,6 +15,7 @@ import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Slf4j
@@ -59,6 +60,7 @@ class ProductDAOImpl implements ProductDAO{
     sql.append("INSERT INTO product (product_id,pname,quantity,price) ");
     sql.append("     VALUES (PRODUCT_PRODUCT_ID_SEQ.nextval,:pname,:quantity,:price) ");
 
+    //BeanPropertySqlParameterSource : 자바객체 필드명과 SQL파라미터명이 같을때 자동 매칭함.
     SqlParameterSource param = new BeanPropertySqlParameterSource(product);
 
     // template.update()가 수행된 레코드의 특정 컬럼값을 읽어오는 용도
@@ -111,5 +113,39 @@ class ProductDAOImpl implements ProductDAO{
     }
 
     return Optional.of(product);
+  }
+
+  /**
+   * 상품삭제(단건)
+   * @param id 상품번호
+   * @return 삭제건수
+   */
+  @Override
+  public int deleteById(Long id) {
+    StringBuffer sql = new StringBuffer();
+    sql.append("DELETE FROM product ");
+    sql.append(" WHERE product_id = :id ");
+    //case1)
+//    SqlParameterSource param = new MapSqlParameterSource().addValue("id",id);
+    //case2)
+    Map<String, Long> param = Map.of("id",id);
+    int rows = template.update(sql.toString(), param); //삭제된 행의 수 반환
+    return rows;
+  }
+
+  /**
+   * 상품삭제(여러건)
+   * @param ids 상품번호s
+   * @return 삭제건수
+   */
+  @Override
+  public int deleteByIds(List<Long> ids) {
+    StringBuffer sql = new StringBuffer();
+    sql.append("DELETE FROM product ");
+    sql.append(" WHERE product_id IN ( :ids ) ");
+
+    Map<String, List<Long>> param = Map.of("ids",ids);
+    int rows = template.update(sql.toString(), param); //삭제한 행의 수 반환
+    return rows;
   }
 }
