@@ -100,8 +100,16 @@ public class ProductController {
     return "redirect:/products";      // 302 get redirectUrl: http://localhost:9080/products
   }
 
-
   //상품삭제(여러건)
+  @PostMapping("/del")      // POST http://localhost:9080/products/del
+  public String deleteByIds(@RequestParam("productIds") List<Long> productIds) {
+
+    log.info("productIds={}", productIds);
+
+    int rows = productSVC.deleteByIds(productIds);
+    log.info("상품정보 {}-건 삭제됨!", rows);
+    return "redirect:/products";
+  }
 
   //
   @ResponseBody
