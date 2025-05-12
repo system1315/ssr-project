@@ -1,13 +1,13 @@
 package com.kh.demo.web;
 
-import co.elastic.clients.elasticsearch._types.analysis.NoriAnalyzer;
 import com.kh.demo.domain.entity.Product;
 import com.kh.demo.domain.product.svc.ProductSVC;
 import com.kh.demo.web.form.product.DetailForm;
 import com.kh.demo.web.form.product.SaveForm;
+import com.kh.demo.web.form.product.UpdateForm;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.boot.Banner;
+import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -18,11 +18,15 @@ import java.util.Optional;
 
 @Slf4j
 @Controller
-@RequestMapping("/products")
+@RequestMapping("/products")       // GET http://localhost:9080/products
 @RequiredArgsConstructor
 public class ProductController {
 
   final private ProductSVC productSVC;
+
+//  ProductController(ProductSVC productSVC){
+//    this.productSVC = productSVC;
+//  }
 
   //목록
   @GetMapping       // GET  http://localhost:9080/products
@@ -60,7 +64,9 @@ public class ProductController {
 
     Long pid = productSVC.save(product);
     redirectAttributes.addAttribute("id",pid);
-    return "redirect:/products/{id}"; //302 GET http://localhost:9080/products/2
+    return "redirect:/products/{id}"; //http 응답메세지  상태라인 : 302
+                                      //               응답헤더 -> location : http://localhost:9080/products/2
+                                      //http 요청메세지  요청라인 : GET http://localhost:9080/products/2
   }
 
   //상품조회(단건)
@@ -93,7 +99,9 @@ public class ProductController {
   //상품삭제(단건)
   //  @GetMapping("/del?id=상품번호")   // GET http://localhost:9080/products/del?pid=상품번호
   @GetMapping("/{id}/del")   // GET http://localhost:9080/products/상품아이디/del
-  public String deleteById(@PathVariable("id") Long productId) {
+  public String deleteById(
+      //@RequestParm("id") Long productId
+      @PathVariable("id") Long productId) {
 
     int rows = productSVC.deleteById(productId);
 
@@ -110,6 +118,30 @@ public class ProductController {
     log.info("상품정보 {}-건 삭제됨!", rows);
     return "redirect:/products";
   }
+
+  //상품수정화면
+  @GetMapping("/{id}/edit")         // GET http://localhost:9080/2/edit
+  public String updateForm(
+      @PathVariable("id") Long productId,
+      Model model
+  ) {
+    //1) 유효성체크
+    //2) 상품조회
+    Optional<Product> optionalProduct = productSVC.findById(productId);
+    Product findedProduct = optionalProduct.orElseThrow();
+
+    UpdateForm updateForm = new UpdateForm();
+    updateForm.setProductId(findedProduct.getProductId());
+    updateForm.setPname(findedProduct.getPname());
+    updateForm.setQuantity(findedProduct.getQuantity());
+    updateForm.setPrice(findedProduct.getPrice());
+
+    model.addAttribute("updateForm",updateForm);
+    return "product/updateForm";
+  }
+
+  //상품수정처리
+//  @PostMapping("")
 
   //
   @ResponseBody

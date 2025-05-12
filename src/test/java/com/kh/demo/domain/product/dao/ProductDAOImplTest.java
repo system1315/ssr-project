@@ -58,7 +58,7 @@ class ProductDAOImplTest {
   @Test
   @DisplayName("상품조회")
   void findById() {
-    Long productId = 41L;
+    Long productId = 20L;
     Optional<Product> optionalProduct = productDAO.findById(productId);
     Product findedProduct = optionalProduct.orElseThrow();// 값이 없으면 예외 발생
     log.info("findedProduct={}", findedProduct);
@@ -67,7 +67,7 @@ class ProductDAOImplTest {
   @Test
   @DisplayName("상품삭제(단건)")
   void deleteById(){
-    Long id = 4L;
+    Long id = 21L;
     int rows = productDAO.deleteById(id);
     log.info("rows={}",rows);
     Assertions.assertThat(rows).isEqualTo(1);
@@ -84,7 +84,7 @@ class ProductDAOImplTest {
   @Test
   @DisplayName("상품수정")
   void updateById() {
-    Long id = 13L;
+    Long id = 22L;
     Product product = new Product();
     product.setPname("본체");
     product.setQuantity(1L);
@@ -93,6 +93,7 @@ class ProductDAOImplTest {
     int rows = productDAO.updateById(id, product);
 
     Optional<Product> optProduct = productDAO.findById(id);
+    // optProduct.orElseThrow() : optional 컨테이너 객체에 product객체가 존재하면 반환 존재하지 않으면 예외발생
     Product modifiedProduct = optProduct.orElseThrow();
 
     Assertions.assertThat(modifiedProduct.getPname()).isEqualTo("본체");

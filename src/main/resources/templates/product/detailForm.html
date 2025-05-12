@@ -21,6 +21,14 @@
     </div>
   </form>
   <script>
+    //수정
+    const $btnUpdate = document.getElementById('btnUpdate');
+    $btnUpdate.addEventListener('click',e=>{
+      const $productId = document.getElementById('productId');
+      const productId = $productId.value;
+      location.href = `/products/${productId}/edit`;  //GET http://localhost:9080/products/2/edit
+    },false);
+
     //삭제
     const $btnDelete = document.getElementById('btnDelete');
     $btnDelete.addEventListener('click', e=>{

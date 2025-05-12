@@ -33,10 +33,7 @@ class ProductDAOImpl implements ProductDAO{
 //  public ProductDAOImpl(NamedParameterJdbcTemplate template){
 //    this.template = template;
 //  }
-
-  
-  
-  
+  //수동매핑
   RowMapper<Product> productRowMapper(){
 
     return (rs, rowNum)->{
@@ -64,9 +61,9 @@ class ProductDAOImpl implements ProductDAO{
     SqlParameterSource param = new BeanPropertySqlParameterSource(product);
 
     // template.update()가 수행된 레코드의 특정 컬럼값을 읽어오는 용도
-    KeyHolder keyHolder = new GeneratedKeyHolder(); 
+    KeyHolder keyHolder = new GeneratedKeyHolder();
     long rows = template.update(sql.toString(),param, keyHolder, new String[]{"product_id"} );
-    log.info("rows={}",rows);
+    //log.info("rows={}",rows);
 
     Number pidNumber = (Number)keyHolder.getKeys().get("product_id");
     long pid = pidNumber.longValue();
