@@ -1,22 +1,22 @@
 spring:
   # app 이름
   application:
-    name: demo
+    name: ssr
   # DB연결 정보
   datasource:
     driver-class-name: oracle.jdbc.driver.OracleDriver
     url: jdbc:oracle:thin:@localhost:1521/xe
-    username: c##product
-    password: product1234
+    username: c##ssr
+    password: ssr1234
   #ai
   ai:
     openai:
-     api-key: ${OPENAI_API_KEY}
+      api-key: ${OPENAI_API_KEY}
 
 
 # 웹서버 포트
 server:
-  port: 9080
+  port: 9090
 
 
 # 로그레벨
@@ -24,6 +24,3 @@ server:
 logging:
   level:
     root: info
-
-
-
