@@ -5,132 +5,168 @@
   <title>게시글 상세</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poor+Story&family=Gowun+Dodum&display=swap" rel="stylesheet">
   <style>
+    @keyframes sparkle {
+      0%, 100% { transform: scale(1); opacity: 0.7; }
+      50% { transform: scale(1.2); opacity: 1; }
+    }
     body {
-        background-image: url('https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyNDExMjVfODYg%2FMDAxNzMyNTM1ODA2MTE0.f5zumgoWI9hVF4gTs4ii4PWJGELjBLzO2rQJhFxmSTcg.ulOseoLUYkZvHGhipR7FoVpZ-uq6ZPz8Ea2V0pw2CBog.JPEG%2F4E7D66A8-C847-4959-9804-FCD21E11D2A9.JPEG&type=w2');
-        background-size: contain;
-        background-position: center;
-        background-repeat: no-repeat;
-        background-attachment: fixed;
-        background-color: #f5f5f5;
-        min-height: 100vh;
-        position: relative;
-        font-family: 'Arial', sans-serif;
+      background:
+        linear-gradient(135deg, #fffbe6 0%, #f5e9da 50%, #e9e4d5 100%),
+        url("data:image/svg+xml;utf8,<svg width='60' height='60' xmlns='http://www.w3.org/2000/svg'><g><circle cx='30' cy='34' r='18' fill='%23fffbe6'/><ellipse cx='15' cy='22' rx='7' ry='8' fill='%23e6ddc6'/><ellipse cx='45' cy='22' rx='7' ry='8' fill='%23e6ddc6'/><circle cx='30' cy='34' r='13' fill='%23f5e9da'/><ellipse cx='25' cy='32' rx='2' ry='3' fill='%237c6f57'/><ellipse cx='35' cy='32' rx='2' ry='3' fill='%237c6f57'/><ellipse cx='30' cy='40' rx='4' ry='2' fill='%23e6ddc6'/><rect x='25' y='43' width='10' height='5' rx='2.5' fill='%23e6ddc6'/><polygon points='30,44 27,49 33,49' fill='%23e9bfa8'/><circle cx='30' cy='47' r='2' fill='%23ffb6b6'/><polygon points='30,44 25,46 27,49' fill='%23ffb6b6'/><polygon points='30,44 35,46 33,49' fill='%23ffb6b6'/></g></svg>");
+      background-size: cover, 80px 80px;
+      background-repeat: repeat, repeat;
+      background-position: center, 0 0;
+      min-height: 100vh;
+      font-family: 'Poor Story', 'Gowun Dodum', sans-serif;
+      position: relative;
+      z-index: 0;
     }
     body::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 245, 245, 0.9) 100%);
-        z-index: -1;
+      content: none !important;
     }
     .container {
-        max-width: 800px;
-        padding-top: 3rem;
-        padding-bottom: 3rem;
-        position: relative;
-        z-index: 1;
+      max-width: 800px;
+      padding-top: 3rem;
+      padding-bottom: 3rem;
+      position: relative;
+      z-index: 1;
     }
     .view-header {
-        text-align: center;
-        margin-bottom: 2rem;
-        background: linear-gradient(135deg, rgba(255, 223, 230, 0.9) 0%, rgba(255, 236, 239, 0.9) 100%);
-        padding: 2rem;
-        border-radius: 15px;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+      text-align: center;
+      margin-bottom: 2rem;
+      background: linear-gradient(135deg, #fffbe6 0%, #f9f6f2 100%);
+      padding: 2rem;
+      border-radius: 15px;
+      box-shadow: 0 4px 15px rgba(230, 210, 180, 0.08);
+      color: #7c6f57;
+      position: relative;
+      font-family: 'Poor Story', cursive;
     }
     .view-header h2 {
-        font-size: 2rem;
-        font-weight: 600;
-        color: #4a4a4a;
-        margin: 0;
+      font-size: 2rem;
+      font-weight: 600;
+      color: #7c6f57;
+      margin: 0;
+      font-family: 'Poor Story', cursive;
     }
     .view-header i {
-        color: #ff9fb6;
-        margin-right: 10px;
+      color: #e6ddc6;
+      margin-right: 10px;
+    }
+    .view-header::before,
+    .view-header::after {
+      content: '🧸';
+      position: absolute;
+      font-size: 2rem;
+      animation: sparkle 3s infinite ease-in-out;
+      opacity: 0.7;
+    }
+    .view-header::before {
+      top: -10px;
+      left: 15px;
+    }
+    .view-header::after {
+      bottom: -10px;
+      right: 15px;
     }
     .card {
-        background: rgba(255, 255, 255, 0.95);
-        border-radius: 20px;
-        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-        border: 1px solid rgba(255, 255, 255, 0.3);
-        backdrop-filter: blur(10px);
-        -webkit-backdrop-filter: blur(10px);
+      background: linear-gradient(135deg, #fffbe6 0%, #f9f6f2 100%);
+      border-radius: 20px;
+      box-shadow: 0 8px 32px rgba(230, 210, 180, 0.10);
+      border: 1px solid #e6ddc6;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
     }
     .card-header {
-        background: linear-gradient(135deg, rgba(255, 245, 247, 0.95) 0%, rgba(255, 250, 251, 0.95) 100%);
-        padding: 1.8rem;
-        border-bottom: 1px solid rgba(255, 182, 193, 0.2);
-        border-radius: 20px 20px 0 0 !important;
+      background: linear-gradient(135deg, #f9f6f2 0%, #fffbe6 100%);
+      padding: 1.8rem;
+      border-bottom: 1px solid #e6ddc6;
+      border-radius: 20px 20px 0 0 !important;
     }
     .card-title {
-        font-size: 1.75rem;
-        font-weight: 600;
-        color: #4a4a4a;
-        margin-bottom: 1rem;
+      font-size: 1.75rem;
+      font-weight: 600;
+      color: #7c6f57;
+      margin-bottom: 1rem;
     }
     .card-meta {
-        display: flex;
-        justify-content: space-between;
-        color: #666;
-        font-size: 0.95rem;
+      display: flex;
+      justify-content: space-between;
+      color: #b8a97f;
+      font-size: 0.95rem;
     }
     .card-meta i {
-        color: #ff9fb6;
-        margin-right: 5px;
+      color: #e6ddc6;
+      margin-right: 5px;
     }
     .card-body {
-        padding: 2rem;
-        font-size: 1.1rem;
-        line-height: 1.8;
-        color: #4a4a4a;
-        background: rgba(255, 255, 255, 0.7);
+      padding: 2rem;
+      font-size: 1.1rem;
+      line-height: 1.8;
+      color: #7c6f57;
+      background: #fffdf6;
     }
     .btn {
-        padding: 0.8rem 2.5rem;
-        border-radius: 25px;
-        font-weight: 600;
-        transition: all 0.3s ease;
+      padding: 0.8rem 2.5rem;
+      border-radius: 25px;
+      font-weight: 600;
+      font-family: 'Poor Story', cursive;
+      transition: all 0.3s ease;
     }
     .btn-secondary {
-        background: linear-gradient(135deg, #6c757d 0%, #5a6268 100%);
-        border: none;
+      background: linear-gradient(135deg, #e9e4d5 0%, #e6ddc6 100%);
+      color: #7c6f57;
+      border: none;
     }
     .btn-secondary:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 4px 15px rgba(108, 117, 125, 0.4);
-        background: linear-gradient(135deg, #5a6268 0%, #495057 100%);
+      background: linear-gradient(135deg, #e6ddc6 0%, #f5e9da 100%);
+      color: #fff;
+      box-shadow: 0 4px 15px rgba(230, 210, 180, 0.13);
     }
     .btn-primary {
-        background: linear-gradient(135deg, #ff9fb6 0%, #ff8da3 100%);
-        border: none;
+      background: linear-gradient(135deg, #fffbe6 0%, #f5e9da 100%);
+      color: #7c6f57;
+      border: 2px solid #e6ddc6;
     }
     .btn-primary:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 4px 15px rgba(255, 159, 182, 0.4);
-        background: linear-gradient(135deg, #ff8da3 0%, #ff7c91 100%);
+      background: linear-gradient(135deg, #f5e9da 0%, #e9e4d5 100%);
+      color: #fff;
+      box-shadow: 0 4px 15px rgba(230, 210, 180, 0.13);
     }
     .btn-danger {
-        background: linear-gradient(135deg, #ff6b6b 0%, #ff5252 100%);
-        border: none;
+      background: linear-gradient(135deg, #e9bfa8 0%, #e6ddc6 100%);
+      color: #7c6f57;
+      border: none;
     }
     .btn-danger:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
-        background: linear-gradient(135deg, #ff5252 0%, #ff4242 100%);
+      background: linear-gradient(135deg, #e6ddc6 0%, #f5e9da 100%);
+      color: #fff;
+      box-shadow: 0 4px 15px rgba(230, 210, 180, 0.13);
     }
     .action-buttons {
-        margin-top: 2rem;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
+      margin-top: 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
     .action-buttons .btn-group {
-        display: flex;
-        gap: 1rem;
+      display: flex;
+      gap: 1rem;
+    }
+    .form-control {
+      border: 2px solid #e6ddc6;
+      border-radius: 10px;
+      padding: 0.8rem;
+      transition: all 0.3s ease;
+      background: #f9f6f2;
+      color: #7c6f57;
+      font-family: 'Gowun Dodum', sans-serif;
+    }
+    .form-control:focus {
+      border-color: #f5e9da;
+      box-shadow: 0 0 0 0.18rem rgba(230, 210, 180, 0.13);
     }
   </style>
 </head>
@@ -153,11 +189,63 @@
     </div>
   </div>
 
+  <!-- 댓글 섹션 -->
+  <div class="card mt-4">
+    <div class="card-header">
+      <h5 class="mb-0"><i class="bi bi-chat-dots"></i> 댓글</h5>
+    </div>
+    <div class="card-body">
+      <!-- 댓글 작성 폼 -->
+      <div th:if="${session.LOGIN_MEMBER != null}" class="mb-4">
+        <div class="mb-3">
+          <textarea class="form-control" id="commentContent" rows="3" placeholder="댓글을 작성하세요" required></textarea>
+        </div>
+        <div class="text-end">
+          <button type="button" class="btn btn-primary" th:attr="onclick='addComment(' + ${board.id} + ')'">
+            <i class="bi bi-send"></i> 댓글 작성
+          </button>
+        </div>
+      </div>
+      <!-- 로그인한 사용자의 닉네임을 JS에서 읽을 수 있도록 숨김 -->
+      <div id="currentUser" style="display:none;" th:text="${session.LOGIN_MEMBER != null ? session.LOGIN_MEMBER.nickname : ''}"></div>
+
+      <!-- 댓글 목록 -->
+      <div id="commentList" class="comment-list">
+        <div th:each="comment : ${comments}" class="comment-item mb-3 p-3 border rounded">
+          <div class="d-flex justify-content-between align-items-start">
+            <div>
+              <strong th:text="${comment.author}">작성자</strong>
+              <small class="text-muted ms-2" th:text="${#temporals.format(comment.createdDate, 'yyyy-MM-dd HH:mm')}">작성일</small>
+            </div>
+            <div th:if="${session.LOGIN_MEMBER != null && session.LOGIN_MEMBER.nickname == comment.author}" class="btn-group">
+              <button type="button" class="btn btn-primary btn-sm edit-comment"
+                      th:data-comment-id="${comment.id}"
+                      th:data-comment-content="${comment.content}">
+                <i class="bi bi-pencil-square"></i> 수정
+              </button>
+              <form th:action="@{/board/comment/delete/{id}(id=${comment.id})}" method="post" style="display: inline;">
+                <button type="submit" class="btn btn-danger btn-sm"
+                        onclick="return confirm('댓글을 삭제하시겠습니까?');">
+                  <i class="bi bi-trash"></i> 삭제
+                </button>
+              </form>
+            </div>
+          </div>
+          <p class="mt-2 mb-0" th:text="${comment.content}">댓글 내용</p>
+        </div>
+        <div th:if="${#lists.isEmpty(comments)}" class="text-center text-muted py-3">
+          <i class="bi bi-chat-square-text"></i> 아직 댓글이 없습니다.
+        </div>
+      </div>
+      <div id="commentPagination" class="pagination justify-content-center mt-3"></div>
+    </div>
+  </div>
+
   <div class="action-buttons">
     <a th:href="@{/board/list}" class="btn btn-secondary">
       <i class="bi bi-arrow-left"></i> 목록으로
     </a>
-    <div class="btn-group">
+    <div class="btn-group" th:if="${session.LOGIN_MEMBER != null && session.LOGIN_MEMBER.nickname == board.author}">
       <a th:href="@{/board/edit/{id}(id=${board.id})}" class="btn btn-primary">
         <i class="bi bi-pencil-square"></i> 수정
       </a>
@@ -172,5 +260,8 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="/js/comment.js"></script>
+<!-- 로그인한 사용자의 닉네임을 JS에서 읽을 수 있도록 숨김 -->
+<div id="currentUser" style="display:none;" th:text="${session.LOGIN_MEMBER != null ? session.LOGIN_MEMBER.nickname : ''}"></div>
 </body>
 </html>

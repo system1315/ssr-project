@@ -5,209 +5,422 @@
     <title>게시판</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poor+Story&family=Gowun+Dodum&display=swap" rel="stylesheet">
+
     <style>
+        @keyframes sparkle {
+            0%, 100% { transform: scale(1); opacity: 0.7; }
+            50% { transform: scale(1.2); opacity: 1; }
+        }
+
         body {
-            background: linear-gradient(135deg, #c3e6ff 0%, #ffd6e0 100%);
-            background-size: cover;
-            background-attachment: fixed;
-            background-position: center;
-            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #fffbe6 0%, #f5e9da 50%, #e9e4d5 100%);
+            min-height: 100vh;
+            font-family: 'Poor Story', 'Gowun Dodum', sans-serif;
+            position: relative;
+            z-index: 0;
         }
-        .board-header {
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(184, 229, 255, 0.9) 100%);
-            color: #333;
-            padding: 2.5rem 0;
-            margin-bottom: 3rem;
-            border-radius: 15px;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
+        body::before {
+            content: none !important;
         }
-        .board-header h1 {
+        .container, .board-header, .alert, .search-form, .table {
+            position: relative;
+            z-index: 1;
+        }
+
+        .auth-buttons {
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .auth-buttons .btn-auth {
+            background: linear-gradient(135deg, #fffbe6 0%, #f9f6f2 100%);
+            border: 2px solid #e6ddc6;
+            color: #a67c00;
             font-weight: bold;
-            color: #2c3e50;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+            border-radius: 18px;
+            transition: all 0.22s;
+            box-shadow: 0 2px 8px rgba(230, 210, 180, 0.08);
         }
-        .board-header p {
-            font-size: 1.1rem;
-            color: #34495e;
+        .auth-buttons .btn-auth:hover, .auth-buttons .btn-auth:focus {
+            background: linear-gradient(135deg, #e6ddc6 0%, #fffbe6 100%);
+            color: #fff;
+            border-color: #e6ddc6;
+            box-shadow: 0 4px 16px rgba(230, 210, 180, 0.18);
         }
+
+        .board-header {
+            background: linear-gradient(135deg, #fffbe6 0%, #f9f6f2 100%);
+            color: #7c6f57;
+            padding: 2rem 1rem;
+            margin-bottom: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 6px 10px rgba(230, 210, 180, 0.13);
+            text-align: center;
+            font-family: 'Poor Story', cursive;
+            position: relative;
+        }
+        .board-header::before,
+        .board-header::after {
+            content: '🧸';
+            position: absolute;
+            font-size: 2rem;
+            animation: sparkle 3s infinite ease-in-out;
+            opacity: 0.7;
+        }
+        .board-header::before {
+            top: -10px;
+            left: 15px;
+        }
+        .board-header::after {
+            bottom: -10px;
+            right: 15px;
+        }
+
+        .board-header h1 {
+            color: #7c6f57;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(230, 230, 250, 0.3);
+        }
+
         .search-form {
             background: rgba(255, 255, 255, 0.95);
-            padding: 1.8rem;
-            border-radius: 12px;
-            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
-            margin-bottom: 2.5rem;
+            border-radius: 20px;
+            padding: 2.5rem;
+            box-shadow: 0 8px 32px rgba(230, 230, 250, 0.3);
+            margin-bottom: 2rem;
+            border: 3px solid #fff;
         }
+
+        .form-control, .form-select {
+            border: 2px solid #e6ddc6;
+            border-radius: 10px;
+            padding: 0.8rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus, .form-select:focus {
+            border-color: #e6ddc6;
+            box-shadow: 0 0 0 0.25rem rgba(230, 230, 250, 0.25);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #fffbe6 0%, #f5e9da 100%);
+            border: none;
+            color: #7c6f57;
+            padding: 0.8rem;
+            border-radius: 10px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(230, 230, 250, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(230, 230, 250, 0.4);
+            background: linear-gradient(135deg, #f5e9da 0%, #e9e4d5 100%);
+        }
+
+        .btn-write {
+            background: linear-gradient(135deg, #fffbe6 0%, #f5e9da 100%);
+            color: #7c6f57;
+            border: 2px solid #e6ddc6;
+            padding: 0.5rem 2rem;
+            border-radius: 25px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            font-family: 'Poor Story', cursive;
+        }
+        .btn-write i {
+            font-size: 1.15em;
+            margin-right: 0.4em;
+        }
+        .btn-write:hover {
+            background: linear-gradient(135deg, #f5e9da 0%, #e9e4d5 100%);
+            color: #fff;
+            box-shadow: 0 4px 10px rgba(230, 210, 180, 0.18);
+        }
+
+        .write-btn-wrapper {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 1.2rem;
+        }
+
         .table {
-            background: rgba(255, 255, 255, 0.9);
-            border-radius: 12px;
-            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(230, 230, 250, 0.3);
+            border: 3px solid #fff;
+            margin-bottom: 2rem;
         }
+
         .table thead th {
-            background-color: #f7f7f7;
-            color: #495057;
-            border-bottom: 2px solid #dee2e6;
+            background-color: #f9f6f2;
+            color: #b8a97f;
+            font-weight: bold;
+            border-bottom: 2px solid #e6ddc6;
         }
+
         .table tbody tr:hover {
-            background-color: #f1f3f5;
+            background-color: rgba(147, 112, 219, 0.05);
             transition: background-color 0.2s ease-in-out;
         }
+
+        .table a {
+            color: #666;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .table a:hover {
+            color: #9370DB;
+        }
+
         .pagination {
             margin-top: 2rem;
         }
-        .btn-write {
-            padding: 0.6rem 2.4rem;
-            border-radius: 25px;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            background-color: hsl(229, 100%, 82%);
-            color: #ffffff;
-        }
-        .btn-write:hover {
-            background-color: hsl(229, 100%, 82%);
-            transform: translateY(-3px);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        }
-        .alert {
-            border-radius: 10px;
-            margin-bottom: 2.5rem;
-        }
-        .alert-success {
-            background-color: #d4edda;
-            color: #155724;
-        }
-        .alert-danger {
-            background-color: #f8d7da;
-            color: #721c24;
-        }
+
         .page-link {
-            color: #6c757d;
+            color: #9370DB;
+            border: 2px solid #9370DB;
+            margin: 0 0.2rem;
+            border-radius: 10px;
             transition: all 0.3s ease;
         }
+
         .page-link:hover {
-            color: #007bff;
+            background-color: rgba(147, 112, 219, 0.1);
+            color: #8A2BE2;
         }
+
         .page-item.active .page-link {
-            background-color: #007bff;
-            border-color: #007bff;
+            background-color: #9370DB;
+            border-color: #9370DB;
             color: white;
         }
-        .page-item.disabled .page-link {
-            color: #ccc;
+
+        .alert {
+            border-radius: 15px;
+            background: #fffdf6;
+            color: #7c6f57;
+            border-left: 5px solid #e6ddc6;
+            font-family: 'Gowun Dodum', sans-serif;
+        }
+
+        .alert i {
+            font-size: 1.3rem;
+            flex-shrink: 0;
+        }
+
+        .alert-success {
+            border-left: 6px solid #38d39f;
+        }
+        .alert-success i {
+            color: #38d39f;
+        }
+        .alert-danger {
+            border-left: 6px solid #ff5e5e;
+        }
+        .alert-danger i {
+            color: #ff5e5e;
+        }
+        .alert-message {
+            flex-grow: 1;
+            font-weight: 500;
+            font-size: 1rem;
+            color: #222;
+            letter-spacing: -0.01em;
+        }
+        .alert .btn-close {
+            margin-left: auto;
+            opacity: 0.5;
+            transition: all 0.3s;
+            font-size: 1.05rem;
+            filter: grayscale(0.3);
+        }
+        .alert .btn-close:hover {
+            opacity: 1;
+            filter: none;
+        }
+        @media (max-width: 600px) {
+            .alert {
+                padding: 0.7rem 0.8rem 0.7rem 0.7rem;
+                min-width: 0;
+                max-width: 100%;
+                font-size: 0.92rem;
+            }
+            .alert i {
+                font-size: 1.05rem;
+            }
+        }
+
+        .auth-buttons .btn-auth,
+        .btn-write {
+            text-decoration: none !important;
         }
     </style>
 </head>
 <body>
-<div class="container mt-5">
-    <!-- 헤더 -->
-    <div class="board-header text-center mb-4">
-        <h1 class="display-4">게시판</h1>
-        <p class="lead">자유롭게 의견을 나누는 공간입니다</p>
-    </div>
+    <div class="container mt-5">
+        <!-- 인증 버튼 -->
+        <div class="auth-buttons">
+            <div th:if="${session.LOGIN_MEMBER == null}">
+                <a th:href="@{/auth/login}" class="btn-auth">
+                    <i class="bi bi-box-arrow-in-right"></i> 로그인
+                </a>
+                <a th:href="@{/auth/register}" class="btn-auth">
+                    <i class="bi bi-person-plus"></i> 회원가입
+                </a>
+            </div>
+            <div th:if="${session.LOGIN_MEMBER != null}" class="d-flex align-items-center gap-3">
+                <span class="text-muted">
+                    <i class="bi bi-person-circle"></i>
+                    <span th:text="${session.LOGIN_MEMBER.nickname}"></span>님 환영합니다
+                </span>
+                <button type="button" onclick="handleLogout()" class="btn-auth">
+                    <i class="bi bi-box-arrow-right"></i> 로그아웃
+                </button>
+            </div>
+        </div>
 
-    <!-- 검색 폼 -->
-    <div class="search-form">
-        <form th:action="@{/board/list}" method="get">
-            <div class="row g-3 align-items-center">
-                <div class="col-md-3">
-                    <select name="searchType" class="form-select">
-                        <option value="title" th:selected="${search.searchType == 'title'}">제목</option>
-                        <option value="content" th:selected="${search.searchType == 'content'}">내용</option>
-                        <option value="author" th:selected="${search.searchType == 'author'}">작성자</option>
-                        <option value="titleContent" th:selected="${search.searchType == 'titleContent'}">제목+내용</option>
-                    </select>
-                </div>
-                <div class="col-md-7">
-                    <div class="input-group">
-                        <input type="text" name="keyword" class="form-control" th:value="${search.keyword}"
-                               placeholder="검색어를 입력하세요">
-                        <button type="submit" class="btn btn-primary">
-                            <i class="bi bi-search"></i> 검색
-                        </button>
+        <!-- 헤더 -->
+        <div class="board-header text-center mb-4">
+            <h1 class="display-4">게시판</h1>
+            <p class="lead">자유롭게 의견을 나누는 공간입니다</p>
+        </div>
+
+        <!-- 검색 폼 -->
+        <div class="search-form">
+            <form th:action="@{/board/list}" method="get">
+                <div class="row g-3 align-items-center">
+                    <div class="col-md-3">
+                        <select name="searchType" class="form-select">
+                            <option value="title" th:selected="${search.searchType == 'title'}">제목</option>
+                            <option value="content" th:selected="${search.searchType == 'content'}">내용</option>
+                            <option value="author" th:selected="${search.searchType == 'author'}">작성자</option>
+                            <option value="titleContent" th:selected="${search.searchType == 'titleContent'}">제목+내용</option>
+                        </select>
+                    </div>
+                    <div class="col-md-7">
+                        <div class="input-group">
+                            <input type="text" name="keyword" class="form-control" th:value="${search.keyword}"
+                                   placeholder="검색어를 입력하세요">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="bi bi-search"></i> 검색
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-md-2 text-end">
+                        <!-- 글쓰기 버튼 위치 이동 -->
                     </div>
                 </div>
-                <div class="col-md-2 text-end">
-                    <a th:href="@{/board/write}" class="btn btn-write">
-                        <i class="bi bi-pencil-square"></i> 글쓰기
+            </form>
+        </div>
+
+        <!-- 알림 메시지 -->
+        <div th:if="${message}" class="alert alert-success alert-dismissible fade show" role="alert">
+            <i class="bi bi-check-circle-fill"></i>
+            <span class="alert-message" th:text="${message}"></span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        <div th:if="${error}" class="alert alert-danger alert-dismissible fade show" role="alert">
+            <i class="bi bi-exclamation-triangle-fill"></i>
+            <span class="alert-message" th:text="${error}"></span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+
+        <!-- 검색창과 게시글 목록 사이 우측 글쓰기 버튼 -->
+        <div class="write-btn-wrapper">
+            <a th:href="@{/board/write}" class="btn-write">
+                <i class="bi bi-pencil-square"></i> 글쓰기
+            </a>
+        </div>
+
+        <!-- 게시글 목록 -->
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th style="width: 10%">번호</th>
+                        <th style="width: 50%">제목</th>
+                        <th style="width: 15%">작성자</th>
+                        <th style="width: 25%">작성일</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="board : ${result.content}">
+                        <td th:text="${board.id}"></td>
+                        <td>
+                            <a th:href="@{/board/view/{id}(id=${board.id})}"
+                               th:text="${board.title}"
+                               class="text-decoration-none text-dark"></a>
+                        </td>
+                        <td>
+                            <i class="bi bi-person-circle"></i>
+                            <span th:text="${board.author}"></span>
+                        </td>
+                        <td>
+                            <i class="bi bi-clock"></i>
+                            <span th:text="${#temporals.format(board.createdDate, 'yyyy-MM-dd HH:mm')}"></span>
+                        </td>
+                    </tr>
+                    <tr th:if="${#lists.isEmpty(result.content)}">
+                        <td colspan="4" class="text-center py-5 text-muted">
+                            <i class="bi bi-inbox-fill fs-1 d-block mb-2"></i>
+                            게시글이 없습니다
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- 페이징 -->
+        <nav aria-label="Page navigation" th:if="${result.totalPages > 0}">
+            <ul class="pagination justify-content-center">
+                <li class="page-item" th:classappend="${!result.hasPrevious} ? 'disabled'">
+                    <a class="page-link" th:href="@{/board/list(page=${result.currentPage - 1}, searchType=${search.searchType}, keyword=${search.keyword})}">
+                        <i class="bi bi-chevron-left"></i>
                     </a>
-                </div>
-            </div>
-        </form>
+                </li>
+                <li class="page-item" th:each="pageNum : ${result.pageNumbers}"
+                    th:classappend="${pageNum == result.currentPage} ? 'active'">
+                    <a class="page-link" th:href="@{/board/list(page=${pageNum}, searchType=${search.searchType}, keyword=${search.keyword})}"
+                       th:text="${pageNum}">1</a>
+                </li>
+                <li class="page-item" th:classappend="${!result.hasNext} ? 'disabled'">
+                    <a class="page-link" th:href="@{/board/list(page=${result.currentPage + 1}, searchType=${search.searchType}, keyword=${search.keyword})}">
+                        <i class="bi bi-chevron-right"></i>
+                    </a>
+                </li>
+            </ul>
+        </nav>
     </div>
 
-    <!-- 알림 메시지 -->
-    <div th:if="${message}" class="alert alert-success alert-dismissible fade show" role="alert">
-        <i class="bi bi-check-circle-fill"></i>
-        <span th:text="${message}"></span>
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-    <div th:if="${error}" class="alert alert-danger alert-dismissible fade show" role="alert">
-        <i class="bi bi-exclamation-triangle-fill"></i>
-        <span th:text="${error}"></span>
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-
-    <!-- 게시글 목록 -->
-    <div class="table-responsive">
-        <table class="table table-hover">
-            <thead>
-                <tr>
-                    <th style="width: 10%">번호</th>
-                    <th style="width: 50%">제목</th>
-                    <th style="width: 15%">작성자</th>
-                    <th style="width: 25%">작성일</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr th:each="board : ${result.content}">
-                    <td th:text="${board.id}"></td>
-                    <td>
-                        <a th:href="@{/board/view/{id}(id=${board.id})}"
-                           th:text="${board.title}"
-                           class="text-decoration-none text-dark"></a>
-                    </td>
-                    <td>
-                        <i class="bi bi-person-circle"></i>
-                        <span th:text="${board.author}"></span>
-                    </td>
-                    <td>
-                        <i class="bi bi-clock"></i>
-                        <span th:text="${#temporals.format(board.createdDate, 'yyyy-MM-dd HH:mm')}"></span>
-                    </td>
-                </tr>
-                <tr th:if="${#lists.isEmpty(result.content)}">
-                    <td colspan="4" class="text-center py-5 text-muted">
-                        <i class="bi bi-inbox-fill fs-1 d-block mb-2"></i>
-                        게시글이 없습니다
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-
-    <!-- 페이징 -->
-    <nav aria-label="Page navigation" th:if="${result.totalPages > 0}">
-        <ul class="pagination justify-content-center">
-            <li class="page-item" th:classappend="${!result.hasPrevious} ? 'disabled'">
-                <a class="page-link" th:href="@{/board/list(page=${result.currentPage - 1}, searchType=${search.searchType}, keyword=${search.keyword})}">
-                    <i class="bi bi-chevron-left"></i>
-                </a>
-            </li>
-            <li class="page-item" th:each="pageNum : ${result.pageNumbers}"
-                th:classappend="${pageNum == result.currentPage} ? 'active'">
-                <a class="page-link" th:href="@{/board/list(page=${pageNum}, searchType=${search.searchType}, keyword=${search.keyword})}"
-                   th:text="${pageNum}">1</a>
-            </li>
-            <li class="page-item" th:classappend="${!result.hasNext} ? 'disabled'">
-                <a class="page-link" th:href="@{/board/list(page=${result.currentPage + 1}, searchType=${search.searchType}, keyword=${search.keyword})}">
-                    <i class="bi bi-chevron-right"></i>
-                </a>
-            </li>
-        </ul>
-    </nav>
-</div>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+    async function handleLogout() {
+        try {
+            const response = await fetch('/api/auth/logout', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            });
+            
+            if (response.ok) {
+                window.location.href = '/board/list';
+            } else {
+                alert('로그아웃 중 오류가 발생했습니다.');
+            }
+        } catch (error) {
+            alert('로그아웃 중 오류가 발생했습니다.');
+        }
+    }
+    </script>
 </body>
 </html> 

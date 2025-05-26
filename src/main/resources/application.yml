@@ -8,6 +8,12 @@ spring:
     url: jdbc:oracle:thin:@localhost:1521/xe
     username: c##ssr
     password: ssr1234
+  # SQL 초기화 설정
+  sql:
+    init:
+      mode: always
+      schema-locations: classpath:schema.sql
+      continue-on-error: true
   #ai
   ai:
     openai:

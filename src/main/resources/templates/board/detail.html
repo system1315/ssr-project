@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>게시글 상세</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>게시글 상세</h1>
+        
+        <div class="board-detail">
+            <h2 th:text="${board.title}">제목</h2>
+            <div class="board-info">
+                <span th:text="${board.author}">작성자</span>
+                <span th:text="${#temporals.format(board.createdDate, 'yyyy-MM-dd HH:mm')}">작성일</span>
+            </div>
+            <div class="board-content" th:text="${board.content}">내용</div>
+        </div>
+
+        <!-- 댓글 섹션 -->
+        <div class="comment-section">
+            <h3>댓글</h3>
+            <div class="comment-form">
+                <textarea id="commentContent" placeholder="댓글을 입력하세요..."></textarea>
+                <button type="button" th:attr="onclick='addComment(' + ${board.id} + ')'">댓글 작성</button>
+            </div>
+            <div id="commentList" class="comment-list">
+                <!-- 댓글 목록이 여기에 동적으로 추가됩니다 -->
+            </div>
+        </div>
+
+        <div class="board-actions">
+            <a th:href="@{/board/list}" class="btn">목록</a>
+            <a th:if="${loginUser != null && loginUser == board.author}"
+               th:href="@{/board/edit/{id}(id=${board.id})}" class="btn">수정</a>
+            <button th:if="${loginUser != null && loginUser == board.author}"
+                    th:attr="onclick='deleteBoard(' + ${board.id} + ')'" class="btn">삭제</button>
+        </div>
+    </div>
+    <script src="/js/comment.js"></script>
+    <script>
+        // 현재 로그인한 사용자 정보를 저장
+        document.addEventListener('DOMContentLoaded', function() {
+            const currentUser = document.createElement('div');
+            currentUser.id = 'currentUser';
+            currentUser.style.display = 'none';
+            currentUser.textContent = '[[${session.loginUser}]]';
+            document.body.appendChild(currentUser);
+        });
+    </script>
+</body>
+</html> 

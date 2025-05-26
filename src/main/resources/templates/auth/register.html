@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>회원가입</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poor+Story&family=Gowun+Dodum&display=swap" rel="stylesheet">
+    <style>
+        @keyframes sparkle {
+            0%, 100% { transform: scale(1); opacity: 0.7; }
+            50% { transform: scale(1.2); opacity: 1; }
+        }
+        body {
+            background:
+                linear-gradient(135deg, #fffbe6 0%, #f5e9da 50%, #e9e4d5 100%),
+                url("data:image/svg+xml;utf8,<svg width='60' height='60' xmlns='http://www.w3.org/2000/svg'><g><circle cx='30' cy='34' r='18' fill='%23fffbe6'/><ellipse cx='15' cy='22' rx='7' ry='8' fill='%23e6ddc6'/><ellipse cx='45' cy='22' rx='7' ry='8' fill='%23e6ddc6'/><circle cx='30' cy='34' r='13' fill='%23f5e9da'/><ellipse cx='25' cy='32' rx='2' ry='3' fill='%237c6f57'/><ellipse cx='35' cy='32' rx='2' ry='3' fill='%237c6f57'/><ellipse cx='30' cy='40' rx='4' ry='2' fill='%23e6ddc6'/><rect x='25' y='43' width='10' height='5' rx='2.5' fill='%23e6ddc6'/><polygon points='30,44 27,49 33,49' fill='%23e9bfa8'/><circle cx='30' cy='47' r='2' fill='%23ffb6b6'/><polygon points='30,44 25,46 27,49' fill='%23ffb6b6'/><polygon points='30,44 35,46 33,49' fill='%23ffb6b6'/></g></svg>");
+            background-size: cover, 80px 80px;
+            background-repeat: repeat, repeat;
+            background-position: center, 0 0;
+            min-height: 100vh;
+            font-family: 'Poor Story', 'Gowun Dodum', sans-serif;
+            position: relative;
+            z-index: 0;
+        }
+        body::before {
+            content: none !important;
+        }
+        .container, .register-container {
+            position: relative;
+            z-index: 1;
+        }
+        .register-container {
+            background: linear-gradient(135deg, #fffbe6 0%, #f9f6f2 100%);
+            color: #7c6f57;
+            border-radius: 20px;
+            padding: 2.2rem 2rem 2.2rem 2rem;
+            box-shadow: 0 6px 10px rgba(230, 210, 180, 0.13);
+            max-width: 400px;
+            width: 100%;
+            margin: 2rem auto;
+            font-family: 'Poor Story', cursive;
+            position: relative;
+        }
+        .register-container::before,
+        .register-container::after {
+            content: '🧸';
+            position: absolute;
+            font-size: 2rem;
+            animation: sparkle 3s infinite ease-in-out;
+            opacity: 0.7;
+        }
+        .register-container::before {
+            top: -10px;
+            left: 15px;
+        }
+        .register-container::after {
+            bottom: -10px;
+            right: 15px;
+        }
+        .register-header {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: #7c6f57;
+        }
+        .register-header h1 {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            font-family: 'Poor Story', cursive;
+        }
+        .register-header i {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: #e6ddc6;
+        }
+        .form-control {
+            border: 2px solid #e6ddc6;
+            border-radius: 12px;
+            padding: 0.8rem;
+            margin-bottom: 1.5rem;
+            transition: all 0.3s ease;
+            font-family: 'Gowun Dodum', sans-serif;
+            background: #f9f6f2;
+            color: #7c6f57;
+        }
+        .form-control:focus {
+            border-color: #f5e9da;
+            box-shadow: 0 0 0 0.18rem rgba(230, 210, 180, 0.13);
+        }
+        .btn-register {
+            background: linear-gradient(135deg, #fffbe6 0%, #f5e9da 100%);
+            color: #7c6f57;
+            border: 2px solid #e6ddc6;
+            padding: 0.7rem 0;
+            border-radius: 25px;
+            font-weight: bold;
+            font-family: 'Poor Story', cursive;
+            width: 100%;
+            margin-top: 1rem;
+            transition: all 0.3s;
+        }
+        .btn-register:hover {
+            background: linear-gradient(135deg, #f5e9da 0%, #e9e4d5 100%);
+            color: #fff;
+            box-shadow: 0 4px 10px rgba(230, 210, 180, 0.13);
+        }
+        .login-link {
+            text-align: center;
+            margin-top: 1.5rem;
+            color: #b8a97f;
+            font-family: 'Gowun Dodum', sans-serif;
+        }
+        .login-link a {
+            color: #b8a97f;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.2s;
+        }
+        .login-link a:hover {
+            color: #e6ddc6;
+            text-shadow: 1px 1px 2px #fffbe6;
+        }
+        .form-row {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 1.5rem;
+        }
+        .form-row .form-group {
+            flex: 1;
+        }
+        .phone-verify {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 1.5rem;
+        }
+        .phone-verify input {
+            flex: 1 1 0;
+            min-width: 0;
+            width: 100%;
+        }
+        .phone-verify button {
+            flex-shrink: 0;
+            min-width: unset;
+            width: auto;
+            padding: 0.5rem 1.2rem;
+            white-space: nowrap;
+        }
+        .terms-agreement {
+            margin: 1.5rem 0;
+            padding: 1rem;
+            background: #f9f6f2;
+            border-radius: 12px;
+            border: 2px solid #e6ddc6;
+        }
+        .terms-agreement label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 0.5rem;
+        }
+        .terms-agreement input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+        }
+        .address-search {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 1.5rem;
+        }
+        .address-search input {
+            flex: 1 1 0;
+            min-width: 0;
+            width: 100%;
+        }
+        .address-search button {
+            flex-shrink: 0;
+            min-width: unset;
+            width: auto;
+            padding: 0.5rem 1.2rem;
+            white-space: nowrap;
+        }
+        .password-requirements {
+            font-size: 0.8rem;
+            color: #b8a97f;
+            margin-top: -1rem;
+            margin-bottom: 1rem;
+        }
+    </style>
+</head>
+<body>
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="register-container">
+                <div class="register-header">
+                    <h1><i class="bi bi-person-plus"></i> 회원가입</h1>
+                </div>
+                <form id="registerForm" onsubmit="return handleRegister(event)">
+                    <!-- 이름 -->
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="lastName" class="form-label">성</label>
+                            <input type="text" class="form-control" id="lastName" name="lastName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="firstName" class="form-label">이름</label>
+                            <input type="text" class="form-control" id="firstName" name="firstName" required>
+                        </div>
+                    </div>
+
+                    <!-- 이메일 -->
+                    <div class="mb-3">
+                        <label for="email" class="form-label">이메일</label>
+                        <input type="email" class="form-control" id="email" name="email" required>
+                    </div>
+
+                    <!-- 닉네임 -->
+                    <div class="mb-3">
+                        <label for="nickname" class="form-label">닉네임</label>
+                        <input type="text" class="form-control" id="nickname" name="nickname" required>
+                    </div>
+
+                    <!-- 비밀번호 -->
+                    <div class="mb-3">
+                        <label for="password" class="form-label">비밀번호</label>
+                        <input type="password" class="form-control" id="password" name="password" required>
+                        <div class="password-requirements">
+                            * 8자 이상, 영문, 숫자, 특수문자 포함
+                        </div>
+                    </div>
+
+                    <!-- 비밀번호 확인 -->
+                    <div class="mb-3">
+                        <label for="passwordConfirm" class="form-label">비밀번호 확인</label>
+                        <input type="password" class="form-control" id="passwordConfirm" name="passwordConfirm" required>
+                    </div>
+
+                    <!-- 성별 -->
+                    <div class="mb-3">
+                        <label class="form-label">성별</label>
+                        <div class="d-flex gap-3">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="gender" id="male" value="male" required>
+                                <label class="form-check-label" for="male">남성</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="gender" id="female" value="female">
+                                <label class="form-check-label" for="female">여성</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 생년월일 -->
+                    <div class="mb-3">
+                        <label for="birthdate" class="form-label">생년월일</label>
+                        <input type="date" class="form-control" id="birthdate" name="birthdate" required>
+                    </div>
+
+                    <!-- 전화번호 -->
+                    <div class="mb-3">
+                        <label for="phone" class="form-label">전화번호</label>
+                        <div class="phone-verify">
+                            <input type="tel" class="form-control" id="phone" name="phone" placeholder="01012345678" required>
+                            <button type="button" class="btn btn-register" onclick="sendVerificationCode()">인증번호 발송</button>
+                        </div>
+                        <div class="phone-verify">
+                            <input type="text" class="form-control" id="verificationCode" placeholder="인증번호 6자리" required>
+                            <button type="button" class="btn btn-register" onclick="verifyCode()">인증확인</button>
+                        </div>
+                    </div>
+
+                    <!-- 주소 -->
+                    <div class="mb-3">
+                        <label for="address" class="form-label">주소</label>
+                        <div class="address-search">
+                            <input type="text" class="form-control" id="postcode" placeholder="우편번호" readonly>
+                            <button type="button" class="btn btn-register" onclick="searchAddress()">주소 검색</button>
+                        </div>
+                        <input type="text" class="form-control mb-2" id="address" name="address" placeholder="기본주소" readonly>
+                        <input type="text" class="form-control" id="detailAddress" name="detailAddress" placeholder="상세주소">
+                    </div>
+
+                    <!-- 이용약관 동의 -->
+                    <div class="terms-agreement">
+                        <div class="mb-2">
+                            <label>
+                                <input type="checkbox" required>
+                                [필수] 이용약관 동의
+                            </label>
+                        </div>
+                        <div class="mb-2">
+                            <label>
+                                <input type="checkbox" required>
+                                [필수] 개인정보 수집 및 이용 동의
+                            </label>
+                        </div>
+                        <div>
+                            <label>
+                                <input type="checkbox">
+                                [선택] 마케팅 정보 수신 동의
+                            </label>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-register w-100">회원가입</button>
+                </form>
+                <div class="login-link">
+                    <a th:href="@{/auth/login}">로그인</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script src="/js/register.js"></script>
+</body>
+</html> 

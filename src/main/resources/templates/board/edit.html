@@ -4,96 +4,179 @@
   <meta charset="UTF-8">
   <title>게시글 수정</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poor+Story&family=Gowun+Dodum&display=swap" rel="stylesheet">
   <style>
+    @keyframes sparkle {
+      0%, 100% { transform: scale(1); opacity: 0.7; }
+      50% { transform: scale(1.2); opacity: 1; }
+    }
     body {
-      background: linear-gradient(135deg, #f0f4f8 0%, #ffffff 100%);
-      font-family: 'Arial', sans-serif;
-      color: #495057;
+      background:
+        linear-gradient(135deg, #fffbe6 0%, #f5e9da 50%, #e9e4d5 100%),
+        url("data:image/svg+xml;utf8,<svg width='60' height='60' xmlns='http://www.w3.org/2000/svg'><g><circle cx='30' cy='34' r='18' fill='%23fffbe6'/><ellipse cx='15' cy='22' rx='7' ry='8' fill='%23e6ddc6'/><ellipse cx='45' cy='22' rx='7' ry='8' fill='%23e6ddc6'/><circle cx='30' cy='34' r='13' fill='%23f5e9da'/><ellipse cx='25' cy='32' rx='2' ry='3' fill='%237c6f57'/><ellipse cx='35' cy='32' rx='2' ry='3' fill='%237c6f57'/><ellipse cx='30' cy='40' rx='4' ry='2' fill='%23e6ddc6'/><rect x='25' y='43' width='10' height='5' rx='2.5' fill='%23e6ddc6'/><polygon points='30,44 27,49 33,49' fill='%23e9bfa8'/><circle cx='30' cy='47' r='2' fill='%23ffb6b6'/><polygon points='30,44 25,46 27,49' fill='%23ffb6b6'/><polygon points='30,44 35,46 33,49' fill='%23ffb6b6'/></g></svg>");
+      background-size: cover, 80px 80px;
+      background-repeat: repeat, repeat;
+      background-position: center, 0 0;
+      min-height: 100vh;
+      font-family: 'Poor Story', 'Gowun Dodum', sans-serif;
+      position: relative;
+      z-index: 0;
+    }
+    body::before {
+      content: none !important;
     }
     .container {
       max-width: 800px;
       padding-top: 3rem;
       padding-bottom: 3rem;
+      position: relative;
+      z-index: 1;
     }
-    h2 {
+    .edit-header {
       text-align: center;
+      margin-bottom: 2rem;
+      background: linear-gradient(135deg, #fffbe6 0%, #f9f6f2 100%);
+      padding: 2rem;
+      border-radius: 15px;
+      box-shadow: 0 4px 15px rgba(230, 210, 180, 0.08);
+      color: #7c6f57;
+      position: relative;
+      font-family: 'Poor Story', cursive;
+    }
+    .edit-header h2 {
       font-size: 2rem;
       font-weight: 600;
-      color: #007bff;
+      color: #7c6f57;
+      margin: 0;
+      font-family: 'Poor Story', cursive;
+    }
+    .edit-header i {
+      color: #e6ddc6;
+      margin-right: 10px;
+    }
+    .edit-header::before,
+    .edit-header::after {
+      content: '🧸';
+      position: absolute;
+      font-size: 2rem;
+      animation: sparkle 3s infinite ease-in-out;
+      opacity: 0.7;
+    }
+    .edit-header::before {
+      top: -10px;
+      left: 15px;
+    }
+    .edit-header::after {
+      bottom: -10px;
+      right: 15px;
+    }
+    .card {
+      background: linear-gradient(135deg, #fffbe6 0%, #f9f6f2 100%);
+      border-radius: 20px;
+      box-shadow: 0 8px 32px rgba(230, 210, 180, 0.10);
+      border: 1px solid #e6ddc6;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+    .card-body {
+      padding: 2rem;
+      font-size: 1.1rem;
+      line-height: 1.8;
+      color: #7c6f57;
+      background: #fffdf6;
     }
     .form-label {
-      font-weight: 600;
+      color: #b8a97f;
+      font-weight: 500;
+      margin-bottom: 0.5rem;
+    }
+    .form-label i {
+      color: #e6ddc6;
+      margin-right: 8px;
     }
     .form-control {
-      border-radius: 12px;
-      border: 1px solid #ccc;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      border: 2px solid #e6ddc6;
+      border-radius: 10px;
+      padding: 0.8rem;
       transition: all 0.3s ease;
+      background: #f9f6f2;
+      color: #7c6f57;
+      font-family: 'Gowun Dodum', sans-serif;
     }
     .form-control:focus {
-      border-color: #007bff;
-      box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+      border-color: #f5e9da;
+      box-shadow: 0 0 0 0.18rem rgba(230, 210, 180, 0.13);
     }
     .btn-primary {
-      background-color: #007bff;
-      border-color: #007bff;
+      background: linear-gradient(135deg, #fffbe6 0%, #f5e9da 100%);
+      color: #7c6f57;
+      border: 2px solid #e6ddc6;
+      padding: 0.8rem 2.5rem;
       border-radius: 25px;
       font-weight: 600;
+      font-family: 'Poor Story', cursive;
       transition: all 0.3s ease;
     }
     .btn-primary:hover {
-      background-color: #0056b3;
-      border-color: #0056b3;
-      transform: translateY(-2px);
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      background: linear-gradient(135deg, #f5e9da 0%, #e9e4d5 100%);
+      color: #fff;
+      box-shadow: 0 4px 15px rgba(230, 210, 180, 0.13);
     }
     .btn-secondary {
+      background: linear-gradient(135deg, #e9e4d5 0%, #e6ddc6 100%);
+      color: #7c6f57;
+      border: none;
+      padding: 0.8rem 2.5rem;
       border-radius: 25px;
       font-weight: 600;
-      border: 1px solid #ccc;
+      font-family: 'Poor Story', cursive;
       transition: all 0.3s ease;
     }
     .btn-secondary:hover {
-      background-color: #f8f9fa;
-      border-color: #ddd;
-      transform: translateY(-2px);
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      background: linear-gradient(135deg, #e6ddc6 0%, #f5e9da 100%);
+      color: #fff;
+      box-shadow: 0 4px 15px rgba(230, 210, 180, 0.13);
     }
-    .d-flex {
-      margin-top: 2rem;
+    textarea.form-control {
+      min-height: 200px;
+      resize: vertical;
     }
   </style>
 </head>
 <body>
-
 <div class="container">
-  <h2>게시글 수정</h2>
-
-  <form th:action="@{/board/edit/{id}(id=${board.id})}" th:object="${board}" method="post">
-    <input type="hidden" th:field="*{id}">
-    
-    <div class="mb-4">
-      <label for="title" class="form-label">제목</label>
-      <input type="text" class="form-control" id="title" th:field="*{title}" required>
+  <div class="edit-header">
+    <h2><i class="bi bi-pencil-square"></i> 게시글 수정</h2>
+  </div>
+  <div class="card">
+    <div class="card-body">
+      <form th:action="@{/board/edit/{id}(id=${board.id})}" th:object="${board}" method="post">
+        <input type="hidden" th:field="*{id}">
+        <div class="mb-4">
+          <label for="title" class="form-label"><i class="bi bi-type-h1"></i> 제목</label>
+          <input type="text" class="form-control" id="title" th:field="*{title}" required placeholder="제목을 입력해주세요">
+        </div>
+        <div class="mb-4">
+          <label class="form-label"><i class="bi bi-person"></i> 작성자</label>
+          <input type="text" class="form-control" th:value="${board.author}" readonly>
+        </div>
+        <div class="mb-4">
+          <label for="content" class="form-label"><i class="bi bi-text-paragraph"></i> 내용</label>
+          <textarea class="form-control" id="content" th:field="*{content}" rows="10" required placeholder="내용을 입력해주세요"></textarea>
+        </div>
+        <div class="d-flex justify-content-between mt-5">
+          <a th:href="@{/board/view/{id}(id=${board.id})}" class="btn btn-secondary">
+            <i class="bi bi-arrow-left"></i> 취소
+          </a>
+          <button type="submit" class="btn btn-primary">
+            <i class="bi bi-save"></i> 저장
+          </button>
+        </div>
+      </form>
     </div>
-
-    <div class="mb-4">
-      <label for="author" class="form-label">작성자</label>
-      <input type="text" class="form-control" id="author" th:field="*{author}" readonly>
-    </div>
-
-    <div class="mb-4">
-      <label for="content" class="form-label">내용</label>
-      <textarea class="form-control" id="content" th:field="*{content}" rows="10" required></textarea>
-    </div>
-
-    <div class="d-flex justify-content-between">
-      <a th:href="@{/board/view/{id}(id=${board.id})}" class="btn btn-secondary">취소</a>
-      <button type="submit" class="btn btn-primary">수정</button>
-    </div>
-  </form>
+  </div>
 </div>
-
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

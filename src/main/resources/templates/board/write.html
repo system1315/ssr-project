@@ -5,101 +5,128 @@
     <title>게시글 작성</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poor+Story&family=Gowun+Dodum&display=swap" rel="stylesheet">
     <style>
+        @keyframes sparkle {
+            0%, 100% { transform: scale(1); opacity: 0.7; }
+            50% { transform: scale(1.2); opacity: 1; }
+        }
         body {
-            background-image: url('https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyNDExMjVfODYg%2FMDAxNzMyNTM1ODA2MTE0.f5zumgoWI9hVF4gTs4ii4PWJGELjBLzO2rQJhFxmSTcg.ulOseoLUYkZvHGhipR7FoVpZ-uq6ZPz8Ea2V0pw2CBog.JPEG%2F4E7D66A8-C847-4959-9804-FCD21E11D2A9.JPEG&type=w2');
-            background-size: contain;
-            background-position: center;
-            background-repeat: no-repeat;
-            background-attachment: fixed;
-            background-color: #f5f5f5;
+            background:
+                linear-gradient(135deg, #fffbe6 0%, #f5e9da 50%, #e9e4d5 100%),
+                url("data:image/svg+xml;utf8,<svg width='60' height='60' xmlns='http://www.w3.org/2000/svg'><g><circle cx='30' cy='34' r='18' fill='%23fffbe6'/><ellipse cx='15' cy='22' rx='7' ry='8' fill='%23e6ddc6'/><ellipse cx='45' cy='22' rx='7' ry='8' fill='%23e6ddc6'/><circle cx='30' cy='34' r='13' fill='%23f5e9da'/><ellipse cx='25' cy='32' rx='2' ry='3' fill='%237c6f57'/><ellipse cx='35' cy='32' rx='2' ry='3' fill='%237c6f57'/><ellipse cx='30' cy='40' rx='4' ry='2' fill='%23e6ddc6'/><rect x='25' y='43' width='10' height='5' rx='2.5' fill='%23e6ddc6'/><polygon points='30,44 27,49 33,49' fill='%23e9bfa8'/><circle cx='30' cy='47' r='2' fill='%23ffb6b6'/><polygon points='30,44 25,46 27,49' fill='%23ffb6b6'/><polygon points='30,44 35,46 33,49' fill='%23ffb6b6'/></g></svg>");
+            background-size: cover, 80px 80px;
+            background-repeat: repeat, repeat;
+            background-position: center, 0 0;
             min-height: 100vh;
+            font-family: 'Poor Story', 'Gowun Dodum', sans-serif;
             position: relative;
+            z-index: 0;
         }
         body::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 245, 245, 0.9) 100%);
-            z-index: -1;
+            content: none !important;
         }
-        .write-container {
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 20px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-            padding: 2.5rem;
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
+        .container, .write-container {
             position: relative;
             z-index: 1;
         }
+        .write-container {
+            background: linear-gradient(135deg, #fffbe6 0%, #f9f6f2 100%);
+            color: #7c6f57;
+            border-radius: 20px;
+            box-shadow: 0 6px 10px rgba(230, 210, 180, 0.13);
+            padding: 2.5rem;
+            font-family: 'Poor Story', cursive;
+            position: relative;
+        }
         .write-header {
-            background: linear-gradient(135deg, rgba(255, 223, 230, 0.9) 0%, rgba(255, 236, 239, 0.9) 100%);
-            color: #5a5a5a;
+            background: linear-gradient(135deg, #fffbe6 0%, #f9f6f2 100%);
+            color: #7c6f57;
             padding: 2rem;
             border-radius: 15px;
             margin-bottom: 2.5rem;
             text-align: center;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 4px 15px rgba(230, 210, 180, 0.08);
+            position: relative;
         }
         .write-header h2 {
             font-weight: 600;
-            color: #4a4a4a;
+            color: #7c6f57;
             margin: 0;
             font-size: 2rem;
+            font-family: 'Poor Story', cursive;
         }
         .write-header h2 i {
-            color: #ff9fb6;
+            color: #e6ddc6;
             margin-right: 10px;
         }
+        .write-header::before,
+        .write-header::after {
+            content: '🧸';
+            position: absolute;
+            font-size: 2rem;
+            animation: sparkle 3s infinite ease-in-out;
+            opacity: 0.7;
+        }
+        .write-header::before {
+            top: -10px;
+            left: 15px;
+        }
+        .write-header::after {
+            bottom: -10px;
+            right: 15px;
+        }
         .form-label {
-            color: #666;
+            color: #b8a97f;
             font-weight: 500;
             margin-bottom: 0.5rem;
         }
         .form-label i {
-            color: #ff9fb6;
+            color: #e6ddc6;
             margin-right: 8px;
         }
         .form-control {
-            border: 2px solid rgba(255, 182, 193, 0.3);
+            border: 2px solid #e6ddc6;
             border-radius: 10px;
             padding: 0.8rem;
             transition: all 0.3s ease;
+            background: #f9f6f2;
+            color: #7c6f57;
+            font-family: 'Gowun Dodum', sans-serif;
         }
         .form-control:focus {
-            border-color: rgba(255, 182, 193, 0.8);
-            box-shadow: 0 0 0 0.25rem rgba(255, 182, 193, 0.25);
+            border-color: #f5e9da;
+            box-shadow: 0 0 0 0.18rem rgba(230, 210, 180, 0.13);
         }
         .btn-primary {
-            background: linear-gradient(135deg, #ff9fb6 0%, #ff8da3 100%);
-            border: none;
+            background: linear-gradient(135deg, #fffbe6 0%, #f5e9da 100%);
+            color: #7c6f57;
+            border: 2px solid #e6ddc6;
             padding: 0.8rem 2.5rem;
             border-radius: 25px;
             font-weight: 600;
+            font-family: 'Poor Story', cursive;
             transition: all 0.3s ease;
         }
         .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 15px rgba(255, 159, 182, 0.4);
-            background: linear-gradient(135deg, #ff8da3 0%, #ff7c91 100%);
+            background: linear-gradient(135deg, #f5e9da 0%, #e9e4d5 100%);
+            color: #fff;
+            box-shadow: 0 4px 15px rgba(230, 210, 180, 0.13);
         }
         .btn-secondary {
-            background: linear-gradient(135deg, #6c757d 0%, #5a6268 100%);
+            background: linear-gradient(135deg, #e9e4d5 0%, #e6ddc6 100%);
+            color: #7c6f57;
             border: none;
             padding: 0.8rem 2.5rem;
             border-radius: 25px;
             font-weight: 600;
+            font-family: 'Poor Story', cursive;
             transition: all 0.3s ease;
         }
         .btn-secondary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 15px rgba(108, 117, 125, 0.4);
-            background: linear-gradient(135deg, #5a6268 0%, #495057 100%);
+            background: linear-gradient(135deg, #e6ddc6 0%, #f5e9da 100%);
+            color: #fff;
+            box-shadow: 0 4px 15px rgba(230, 210, 180, 0.13);
         }
         textarea.form-control {
             min-height: 200px;
@@ -113,7 +140,6 @@
         <div class="write-header">
             <h2><i class="bi bi-pencil-square"></i> 게시글 작성</h2>
         </div>
-
         <form th:action="@{/board/write}" th:object="${board}" method="post">
             <div class="mb-4">
                 <label for="title" class="form-label">
@@ -122,15 +148,12 @@
                 <input type="text" class="form-control" id="title" th:field="*{title}"
                        required placeholder="제목을 입력해주세요">
             </div>
-
             <div class="mb-4">
-                <label for="author" class="form-label">
+                <label class="form-label">
                     <i class="bi bi-person"></i> 작성자
                 </label>
-                <input type="text" class="form-control" id="author" th:field="*{author}"
-                       required placeholder="작성자 이름을 입력해주세요">
+                <input type="text" class="form-control" th:value="${session.LOGIN_MEMBER.nickname}" readonly>
             </div>
-
             <div class="mb-4">
                 <label for="content" class="form-label">
                     <i class="bi bi-text-paragraph"></i> 내용
@@ -138,7 +161,6 @@
                 <textarea class="form-control" id="content" th:field="*{content}"
                           rows="10" required placeholder="내용을 입력해주세요"></textarea>
             </div>
-
             <div class="d-flex justify-content-between mt-5">
                 <a th:href="@{/board/list}" class="btn btn-secondary">
                     <i class="bi bi-arrow-left"></i> 목록으로
@@ -150,7 +172,6 @@
         </form>
     </div>
 </div>
-
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html> 

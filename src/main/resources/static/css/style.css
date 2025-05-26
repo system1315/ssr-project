@@ -3,9 +3,9 @@ body {
     background-size: cover;
     background-attachment: fixed;
     background-position: center;
-    background-repeat: no-repeat;
     position: relative;
     min-height: 100vh;
+    font-family: 'Poor Story', 'Gowun Dodum', sans-serif;
 }
 
 body::before {
@@ -24,15 +24,41 @@ body::before {
     position: relative;
     z-index: 1;
 }
-
 .board-header {
+    background: linear-gradient(135deg, #ffe0e9 0%, #fff0f5 100%);
+    color: #703c3c;
+    padding: 2rem 1rem;
+    margin-bottom: 2rem;
+    border-radius: 20px;
+    box-shadow: 0 6px 10px rgba(255, 192, 203, 0.2);
+    text-align: center;
+    font-family: 'Poor Story', cursive;
+    position: relative;
+}
+.board-header::before,
+.board-header::after {
+    content: '🧸';
+    position: absolute;
+    font-size: 2rem;
+    animation: sparkle 3s infinite ease-in-out;
+    opacity: 0.7;
+}
+.board-header::before {
+    top: -10px;
+    left: 15px;
+}
+.board-header::after {
+    bottom: -10px;
+    right: 15px;
+}
+/* .board-header {
     background: linear-gradient(135deg, rgba(255, 182, 193, 0.7) 0%, rgba(255, 218, 224, 0.7) 100%);
     color: #333;
     padding: 2rem 0;
     margin-bottom: 2rem;
     border-radius: 10px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
+} */
 .search-form {
     background: rgba(255, 255, 255, 0.9);
     padding: 1.5rem;
@@ -46,9 +72,15 @@ body::before {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 .table thead th {
+    background-color: #fff0f5;
+    color: #d27c7c;
+    font-weight: bold;
+    border-bottom: 2px solid #ffcfd2;
+}
+/* .table thead th {
     border-bottom: 2px solid #dee2e6;
     background-color: #f8f9fa;
-}
+} */
 .table tbody tr:hover {
     background-color: #f8f9fa;
     transition: background-color 0.2s ease-in-out;
@@ -57,6 +89,22 @@ body::before {
     margin-top: 2rem;
 }
 .btn-write {
+    background: linear-gradient(135deg, #ffe0e9 0%, #ffcad4 100%);
+    color: #703c3c;
+    border: 2px solid #ffb6c1;
+    padding: 0.5rem 2rem;
+    border-radius: 25px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    font-family: 'Poor Story', cursive;
+}
+
+.btn-write:hover {
+    background: linear-gradient(135deg, #ffb6c1 0%, #ff9cae 100%);
+    color: white;
+    box-shadow: 0 4px 10px rgba(255, 192, 203, 0.4);
+}
+/* .btn-write {
     padding: 0.5rem 2rem;
     border-radius: 25px;
     font-weight: 600;
@@ -65,11 +113,19 @@ body::before {
 .btn-write:hover {
     transform: translateY(-2px);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-.alert {
+} */
+/* .alert {
     border-radius: 10px;
     margin-bottom: 2rem;
+} */
+ .alert {
+    border-radius: 15px;
+    background: #fff8f9;
+    color: #703c3c;
+    border-left: 5px solid #ffb6b6;
+    font-family: 'Gowun Dodum', sans-serif;
 }
+
 .empty-state {
     padding: 2rem;
     background: rgba(255, 255, 255, 0.9);
@@ -96,4 +152,91 @@ body::before {
     transform: translateY(-2px);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     background: linear-gradient(135deg, #ff8da3 0%, #ff7c91 100%);
-} 
+}
+
+/* 댓글 섹션 스타일 */
+.comment-section {
+    margin-top: 2rem;
+    padding: 1rem;
+    border-top: 1px solid #ddd;
+}
+
+.comment-form {
+    margin-bottom: 1rem;
+}
+
+.comment-form textarea {
+    width: 100%;
+    min-height: 80px;
+    padding: 0.5rem;
+    margin-bottom: 0.5rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    resize: vertical;
+}
+
+.comment-form button {
+    padding: 0.5rem 1rem;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.comment-form button:hover {
+    background-color: #0056b3;
+}
+
+.comment-list {
+    margin-top: 1rem;
+}
+
+.comment-item {
+    padding: 1rem;
+    border-bottom: 1px solid #eee;
+}
+
+.comment-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+    color: #666;
+    font-size: 0.9rem;
+}
+
+.comment-content {
+    margin-bottom: 0.5rem;
+    line-height: 1.5;
+}
+
+.comment-actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.comment-actions button {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.9rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.edit-btn {
+    background-color: #28a745;
+    color: white;
+}
+
+.edit-btn:hover {
+    background-color: #218838;
+}
+
+.delete-btn {
+    background-color: #dc3545;
+    color: white;
+}
+
+.delete-btn:hover {
+    background-color: #c82333;
+}
