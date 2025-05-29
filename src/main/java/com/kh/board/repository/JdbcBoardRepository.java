@@ -56,7 +56,7 @@ public class JdbcBoardRepository implements BoardRepository {
     listParams.add(searchDTO.getSize());
 
     List<BoardDTO> content = jdbcTemplate.query(
-        listSql + " ORDER BY ID DESC OFFSET ? ROWS FETCH NEXT ? ROWS ONLY",
+        listSql + " ORDER BY ID ASC OFFSET ? ROWS FETCH NEXT ? ROWS ONLY",
         boardRowMapper,
         listParams.toArray()
     );

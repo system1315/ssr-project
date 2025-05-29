@@ -39,6 +39,20 @@ public class JdbcMemberRepository implements MemberRepository {
     }
 
     @Override
+    public Optional<MemberDTO> findByNickname(String nickname) {
+        String sql = "SELECT * FROM MEMBER WHERE NICKNAME = ?";
+        List<MemberDTO> results = jdbcTemplate.query(sql, memberRowMapper, nickname);
+        return results.stream().findFirst();
+    }
+
+    @Override
+    public Optional<MemberDTO> findByPhone(String phone) {
+        String sql = "SELECT * FROM MEMBER WHERE PHONE = ?";
+        List<MemberDTO> results = jdbcTemplate.query(sql, memberRowMapper, phone);
+        return results.stream().findFirst();
+    }
+
+    @Override
     public Optional<MemberDTO> findById(Long id) {
         String sql = "SELECT * FROM MEMBER WHERE ID = ?";
         List<MemberDTO> results = jdbcTemplate.query(sql, memberRowMapper, id);
@@ -55,14 +69,15 @@ public class JdbcMemberRepository implements MemberRepository {
     }
 
     private MemberDTO insert(MemberDTO member) {
-        String sql = "INSERT INTO MEMBER (EMAIL, PASSWORD, NICKNAME, CREATED_DATE) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO MEMBER (EMAIL, PASSWORD, NICKNAME, PHONE, CREATED_DATE) VALUES (?, ?, ?, ?, ?)";
         KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbcTemplate.update(connection -> {
             PreparedStatement ps = connection.prepareStatement(sql, new String[]{"ID"});
             ps.setString(1, member.getEmail());
             ps.setString(2, member.getPassword());
             ps.setString(3, member.getNickname());
-            ps.setTimestamp(4, Timestamp.valueOf(member.getCreatedDate()));
+            ps.setString(4, member.getPhone());
+            ps.setTimestamp(5, Timestamp.valueOf(member.getCreatedDate()));
             return ps;
         }, keyHolder);
         member.setId(keyHolder.getKey().longValue());
@@ -70,8 +85,8 @@ public class JdbcMemberRepository implements MemberRepository {
     }
 
     private MemberDTO update(MemberDTO member) {
-        String sql = "UPDATE MEMBER SET PASSWORD = ?, NICKNAME = ? WHERE ID = ?";
-        jdbcTemplate.update(sql, member.getPassword(), member.getNickname(), member.getId());
+        String sql = "UPDATE MEMBER SET PASSWORD = ?, NICKNAME = ?, PHONE = ? WHERE ID = ?";
+        jdbcTemplate.update(sql, member.getPassword(), member.getNickname(), member.getPhone(), member.getId());
         return member;
     }
 } 

@@ -14,40 +14,40 @@ import java.time.LocalDateTime;
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 public class BoardServiceImpl implements BoardService {
-  private final BoardRepository boardRepository;
+    private final BoardRepository boardRepository;
 
-  @Override
-  public PageDTO<BoardDTO> getAllBoards(SearchDTO searchDTO) {
-    return boardRepository.findAll(searchDTO);
-  }
+    @Override
+    public PageDTO<BoardDTO> getAllBoards(SearchDTO searchDTO) {
+        return boardRepository.findAll(searchDTO);
+    }
 
-  @Override
-  public BoardDTO getBoard(Long id) {
-    return boardRepository.findById(id)
-        .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 존재하지 않습니다."));
-  }
+    @Override
+    public BoardDTO getBoard(Long id) {
+        return boardRepository.findById(id)
+            .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 존재하지 않습니다."));
+    }
 
-  @Override
-  @Transactional
-  public BoardDTO createBoard(BoardDTO board) {
-    board.setCreatedDate(LocalDateTime.now());
-    board.setModifiedDate(LocalDateTime.now());
-    return boardRepository.save(board);
-  }
+    @Override
+    @Transactional
+    public BoardDTO createBoard(BoardDTO board) {
+        board.setCreatedDate(LocalDateTime.now());
+        board.setModifiedDate(LocalDateTime.now());
+        return boardRepository.save(board);
+    }
 
-  @Override
-  @Transactional
-  public BoardDTO updateBoard(Long id, BoardDTO board) {
-    BoardDTO existingBoard = getBoard(id);
-    existingBoard.setTitle(board.getTitle());
-    existingBoard.setContent(board.getContent());
-    existingBoard.setModifiedDate(LocalDateTime.now());
-    return boardRepository.save(existingBoard);
-  }
+    @Override
+    @Transactional
+    public BoardDTO updateBoard(Long id, BoardDTO board) {
+        BoardDTO existingBoard = getBoard(id);
+        existingBoard.setTitle(board.getTitle());
+        existingBoard.setContent(board.getContent());
+        existingBoard.setModifiedDate(LocalDateTime.now());
+        return boardRepository.save(existingBoard);
+    }
 
-  @Override
-  @Transactional
-  public void deleteBoard(Long id) {
-    boardRepository.deleteById(id);
-  }
+    @Override
+    @Transactional
+    public void deleteBoard(Long id) {
+        boardRepository.deleteById(id);
+    }
 }

@@ -34,7 +34,7 @@ public class JdbcCommentRepository implements CommentRepository {
 
     @Override
     public List<CommentDTO> findByBoardId(Long boardId) {
-        String sql = "SELECT * FROM BOARD_COMMENT WHERE BOARD_ID = ? ORDER BY CREATED_DATE DESC";
+        String sql = "SELECT * FROM BOARD_COMMENT WHERE BOARD_ID = ? ORDER BY CREATED_DATE ASC";
         return jdbcTemplate.query(sql, commentRowMapper, boardId);
     }
 

@@ -50,8 +50,9 @@ public class PageDTO<T> {
   }
 
   public int[] getPageNumbers() {
-    int start = Math.max(1, currentPage - 2);
-    int end = Math.min(totalPages, currentPage + 2);
+    int start = Math.max(1, currentPage - 4);
+    int end = Math.min(totalPages, start + 9);
+    if (end - start < 9) start = Math.max(1, end - 9);
     int[] pages = new int[end - start + 1];
     for (int i = 0; i < pages.length; i++) {
       pages[i] = start + i;

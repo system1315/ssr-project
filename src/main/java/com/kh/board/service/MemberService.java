@@ -8,4 +8,7 @@ public interface MemberService {
     Optional<MemberDTO> login(String email, String password);
     Optional<MemberDTO> findByEmail(String email);
     Optional<MemberDTO> findById(Long id);
+    boolean existsByEmail(String email);
+    boolean existsByNickname(String nickname);
+    boolean existsByPhone(String phone);
 } 

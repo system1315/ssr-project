@@ -295,7 +295,7 @@
         </div>
 
         <!-- 검색 폼 -->
-        <div class="search-form">
+        <div class="search-form position-relative">
             <form th:action="@{/board/list}" method="get">
                 <div class="row g-3 align-items-center">
                     <div class="col-md-3">
@@ -315,8 +315,8 @@
                             </button>
                         </div>
                     </div>
-                    <div class="col-md-2 text-end">
-                        <!-- 글쓰기 버튼 위치 이동 -->
+                    <div class="col-md-2 text-end position-relative">
+                        <img src="/img/olaf.png" alt="올라프" style="height:80px; position:absolute; right:10px; top:-40px; z-index:2;">
                     </div>
                 </div>
             </form>

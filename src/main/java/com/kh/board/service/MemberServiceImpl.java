@@ -33,4 +33,19 @@ public class MemberServiceImpl implements MemberService {
     public Optional<MemberDTO> findById(Long id) {
         return memberRepository.findById(id);
     }
+
+    @Override
+    public boolean existsByEmail(String email) {
+        return memberRepository.findByEmail(email).isPresent();
+    }
+
+    @Override
+    public boolean existsByNickname(String nickname) {
+        return memberRepository.findByNickname(nickname).isPresent();
+    }
+
+    @Override
+    public boolean existsByPhone(String phone) {
+        return memberRepository.findByPhone(phone).isPresent();
+    }
 } 

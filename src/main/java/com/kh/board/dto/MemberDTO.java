@@ -9,6 +9,7 @@ public class MemberDTO {
     private String email;
     private String password;
     private String nickname;
+    private String phone;
     private LocalDateTime createdDate;
 
     public MemberDTO() {}
@@ -28,6 +29,12 @@ public class MemberDTO {
     public void setPassword(String password) { this.password = password; }
     public String getNickname() { return nickname; }
     public void setNickname(String nickname) { this.nickname = nickname; }
+    public String getPhone() {
+        return phone;
+    }
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
     public LocalDateTime getCreatedDate() { return createdDate; }
     public void setCreatedDate(LocalDateTime createdDate) {
         // null로 들어오면 현재 시간으로 세팅

@@ -16,9 +16,6 @@ function displayComments(comments) {
     commentList.innerHTML = '';
     const currentUser = document.getElementById('currentUser').textContent;
     
-    // 최신순으로 정렬 (createdDate 기준 내림차순)
-    comments.sort((a, b) => new Date(a.createdDate) - new Date(b.createdDate));
-
     comments.forEach(comment => {
         const commentElement = document.createElement('div');
         commentElement.className = 'comment-item mb-3 p-3 border rounded';
